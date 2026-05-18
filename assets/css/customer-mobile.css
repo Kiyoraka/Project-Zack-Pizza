@@ -48,7 +48,7 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 20px;
+    gap: 0;
     width: 100%;
     max-width: 360px;
     margin: 0 auto;
@@ -59,7 +59,7 @@
     margin: 0;
   }
   .hero-band .btn + .btn {
-    margin-top: 4px;
+    margin-top: 15%;
   }
 
   /* Sections collapse padding with breathing room */
