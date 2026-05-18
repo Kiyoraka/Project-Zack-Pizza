@@ -68,60 +68,6 @@ const SAMPLE_DATA = {
       available: false
     },
     {
-      id: "prod-007",
-      name: "Garlic Butter Bread",
-      description: "Hand-torn focaccia brushed with herbed garlic butter and sea salt.",
-      price: 12.00,
-      image: "assets/img/products/garlic-bread.jpg",
-      category: "Sides",
-      available: true
-    },
-    {
-      id: "prod-008",
-      name: "Buffalo Wings (6 pcs)",
-      description: "Crispy chicken wings glazed in tangy buffalo sauce with blue cheese dip.",
-      price: 16.00,
-      image: "assets/img/products/buffalo-wings.jpg",
-      category: "Sides",
-      available: true
-    },
-    {
-      id: "prod-009",
-      name: "Iced Lemon Tea",
-      description: "Freshly brewed black tea over ice with a squeeze of local lemon.",
-      price: 7.00,
-      image: "assets/img/products/iced-lemon-tea.jpg",
-      category: "Drinks",
-      available: true
-    },
-    {
-      id: "prod-010",
-      name: "Coca-Cola Classic",
-      description: "Ice-cold 330ml can of the original fizzy classic.",
-      price: 5.50,
-      image: "assets/img/products/coke.jpg",
-      category: "Drinks",
-      available: true
-    },
-    {
-      id: "prod-011",
-      name: "Chocolate Lava Cake",
-      description: "Warm dark chocolate cake with a molten centre and vanilla ice cream.",
-      price: 14.00,
-      image: "assets/img/products/lava-cake.jpg",
-      category: "Desserts",
-      available: true
-    },
-    {
-      id: "prod-012",
-      name: "Sticky Toffee Pudding",
-      description: "Date sponge soaked in buttery toffee sauce, served with cream.",
-      price: 13.00,
-      image: "assets/img/products/sticky-toffee.jpg",
-      category: "Desserts",
-      available: false
-    },
-    {
       id: "prod-013",
       name: "Quattro Formaggi",
       description: "Four-cheese blend of mozzarella, parmesan, gorgonzola, and ricotta on hand-stretched base.",
@@ -186,7 +132,7 @@ const SAMPLE_DATA = {
         { day: "Sun", location: "Pengkalan Chepa" }
       ],
       status: "active",
-      outOfStockToday: ["prod-012"]
+      outOfStockToday: ["prod-013"]
     },
     {
       id: "lorry-3",
@@ -232,7 +178,7 @@ const SAMPLE_DATA = {
         { day: "Sun", location: "Jalan PCB" }
       ],
       status: "active",
-      outOfStockToday: ["prod-003", "prod-008"]
+      outOfStockToday: ["prod-003"]
     },
     {
       id: "lorry-5",
@@ -278,7 +224,7 @@ const SAMPLE_DATA = {
         { day: "Sun", location: "Bachok Town" }
       ],
       status: "active",
-      outOfStockToday: ["prod-009"]
+      outOfStockToday: ["prod-014"]
     },
     {
       id: "lorry-7",
@@ -359,9 +305,9 @@ const SAMPLE_DATA = {
       customerPhone: "+60123456701",
       items: [
         { productId: "prod-002", qty: 1, price: 28.00 },
-        { productId: "prod-009", qty: 2, price: 7.00 }
+        { productId: "prod-001", qty: 1, price: 22.00 }
       ],
-      total: 42.00,
+      total: 50.00,
       paymentMethod: "stripe",
       paymentStatus: "paid",
       orderStatus: "pending",
@@ -375,10 +321,9 @@ const SAMPLE_DATA = {
       customerPhone: "+60127654302",
       items: [
         { productId: "prod-004", qty: 1, price: 34.00 },
-        { productId: "prod-007", qty: 1, price: 12.00 },
-        { productId: "prod-010", qty: 1, price: 5.50 }
+        { productId: "prod-013", qty: 1, price: 32.00 }
       ],
-      total: 51.50,
+      total: 66.00,
       paymentMethod: "billplz",
       paymentStatus: "paid",
       orderStatus: "preparing",
@@ -392,9 +337,9 @@ const SAMPLE_DATA = {
       customerPhone: "+60169998703",
       items: [
         { productId: "prod-001", qty: 2, price: 22.00 },
-        { productId: "prod-011", qty: 1, price: 14.00 }
+        { productId: "prod-014", qty: 1, price: 36.00 }
       ],
-      total: 58.00,
+      total: 80.00,
       paymentMethod: "fpx",
       paymentStatus: "paid",
       orderStatus: "ready",
@@ -408,9 +353,9 @@ const SAMPLE_DATA = {
       customerPhone: "+60112223304",
       items: [
         { productId: "prod-005", qty: 1, price: 38.00 },
-        { productId: "prod-009", qty: 1, price: 7.00 }
+        { productId: "prod-003", qty: 1, price: 26.00 }
       ],
-      total: 45.00,
+      total: 64.00,
       paymentMethod: "cash",
       paymentStatus: "pending",
       orderStatus: "pending",
@@ -424,9 +369,9 @@ const SAMPLE_DATA = {
       customerPhone: "+60134445605",
       items: [
         { productId: "prod-003", qty: 1, price: 26.00 },
-        { productId: "prod-008", qty: 1, price: 16.00 }
+        { productId: "prod-013", qty: 1, price: 32.00 }
       ],
-      total: 42.00,
+      total: 58.00,
       paymentMethod: "stripe",
       paymentStatus: "paid",
       orderStatus: "picked-up",
@@ -455,10 +400,9 @@ const SAMPLE_DATA = {
       customerPhone: "+60176665507",
       items: [
         { productId: "prod-005", qty: 1, price: 38.00 },
-        { productId: "prod-007", qty: 1, price: 12.00 },
-        { productId: "prod-011", qty: 2, price: 14.00 }
+        { productId: "prod-014", qty: 1, price: 36.00 }
       ],
-      total: 78.00,
+      total: 74.00,
       paymentMethod: "fpx",
       paymentStatus: "paid",
       orderStatus: "preparing",
@@ -487,9 +431,9 @@ const SAMPLE_DATA = {
       customerPhone: "+60145556609",
       items: [
         { productId: "prod-001", qty: 1, price: 22.00 },
-        { productId: "prod-010", qty: 2, price: 5.50 }
+        { productId: "prod-002", qty: 1, price: 28.00 }
       ],
-      total: 33.00,
+      total: 50.00,
       paymentMethod: "cash",
       paymentStatus: "pending",
       orderStatus: "cancelled",
@@ -503,9 +447,9 @@ const SAMPLE_DATA = {
       customerPhone: "+60192221110",
       items: [
         { productId: "prod-006", qty: 1, price: 42.00 },
-        { productId: "prod-009", qty: 1, price: 7.00 }
+        { productId: "prod-013", qty: 1, price: 32.00 }
       ],
-      total: 49.00,
+      total: 74.00,
       paymentMethod: "billplz",
       paymentStatus: "pending",
       orderStatus: "cancelled",
