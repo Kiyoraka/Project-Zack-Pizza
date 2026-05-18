@@ -259,6 +259,44 @@
     setHtml('week-route-grid', header + rows);
   }
 
+  // ---------- Week route mobile cards (day-first) ----------
+  function renderWeekRouteCards(outlets) {
+    var days = [
+      { abbr: 'Mon', full: 'Monday' },
+      { abbr: 'Tue', full: 'Tuesday' },
+      { abbr: 'Wed', full: 'Wednesday' },
+      { abbr: 'Thu', full: 'Thursday' },
+      { abbr: 'Fri', full: 'Friday' },
+      { abbr: 'Sat', full: 'Saturday' },
+      { abbr: 'Sun', full: 'Sunday' }
+    ];
+
+    var html = days.map(function (d) {
+      var rows = outlets.map(function (o) {
+        var entry = (o.weekSchedule || []).filter(function (s) { return s.day === d.abbr; })[0];
+        var loc = entry ? entry.location : '—';
+        return [
+          '<li class="day-card-row">',
+            '<span class="day-card-lorry">&#128666; ' + escapeHtml(o.name) + '</span>',
+            '<span class="day-card-location">&#128205; ' + escapeHtml(loc) + '</span>',
+          '</li>'
+        ].join('');
+      }).join('');
+
+      return [
+        '<article class="day-card">',
+          '<header class="day-card-head">',
+            '<h3 class="day-card-title">' + d.full + '</h3>',
+            '<span class="day-card-meta">' + outlets.length + ' lorries</span>',
+          '</header>',
+          '<ul class="day-card-list">', rows, '</ul>',
+        '</article>'
+      ].join('');
+    }).join('');
+
+    setHtml('week-route-cards', html);
+  }
+
   // ---------- Cart badge ----------
   function renderCartBadge() {
     var badge = document.getElementById('cart-count-badge');
@@ -299,6 +337,7 @@
     renderAllLorries(outlets, '');
     renderMenuPreview(SAMPLE_DATA.products || []);
     renderWeekRoute(outlets);
+    renderWeekRouteCards(outlets);
     renderCartBadge();
     wireLorrySearch(outlets);
   }

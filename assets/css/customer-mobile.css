@@ -94,6 +94,15 @@
   .section-head #today-date {
     font-size: 14px;
   }
+
+  /* Week Route: swap desktop table for day cards on mobile */
+  #week-route-grid {
+    display: none;
+  }
+  .week-route-cards {
+    display: flex;
+  }
+
   .menu-grid,
   .outlet-menu-grid {
     grid-template-columns: 1fr;
