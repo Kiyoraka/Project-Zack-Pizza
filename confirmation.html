@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Order Confirmed · Zack Pizza</title>
+  <meta name="theme-color" content="#E63946">
+  <link rel="stylesheet" href="assets/css/global.css">
+  <link rel="stylesheet" href="assets/css/customer.css">
+</head>
+<body>
+  <header class="site-header container">
+    <a class="brand" href="index.html">🍕 ZACK PIZZA</a>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="index.html#menu">Menu</a>
+      <a href="index.html#find-us">Find Us</a>
+    </nav>
+    <a class="btn btn-secondary btn-sm" href="index.html">Back to Home</a>
+    <button class="hamburger" type="button" aria-label="Open menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+
+  <main class="confirmation container">
+    <div class="confirmation-check">✓</div>
+    <h1>Order Confirmed!</h1>
+    <p class="text-muted">Thank you for ordering from Zack Pizza.</p>
+    <p class="order-id-line">
+      Order ID: <code id="order-id" class="order-id-code">—</code>
+    </p>
+
+    <div class="qr-placeholder" aria-label="QR code placeholder">
+      <span class="qr-text">SHOW THIS<br>AT PICKUP</span>
+    </div>
+
+    <section class="card pickup-card">
+      <h3>Pickup details</h3>
+      <p class="text-muted uppercase-micro">Lorry</p>
+      <p><strong id="pickup-outlet">—</strong></p>
+      <p class="text-muted uppercase-micro">Location</p>
+      <p id="pickup-address">—</p>
+      <p><a id="pickup-maps" class="btn btn-secondary btn-sm" href="#" target="_blank" rel="noopener">View on Maps →</a></p>
+      <p class="text-muted uppercase-micro">Ready by</p>
+      <p><strong id="pickup-eta">—</strong></p>
+    </section>
+
+    <section class="card order-detail-card">
+      <h3>Your order</h3>
+      <div id="order-items" class="order-summary-items"></div>
+      <div class="cart-total-row cart-total-row-grand">
+        <span>Total</span>
+        <span id="order-total">RM 0.00</span>
+      </div>
+      <p class="text-muted">Paid with <strong id="order-payment">—</strong></p>
+    </section>
+
+    <div class="confirmation-actions">
+      <a class="btn btn-primary btn-lg" href="index.html">Order Again</a>
+      <a class="btn btn-secondary btn-lg" href="index.html">Back to Home</a>
+    </div>
+  </main>
+
+  <footer class="site-footer container">
+    <div class="footer-brand">
+      <p class="brand">🍕 ZACK PIZZA</p>
+      <p class="tagline">Hot pizza, fresh wheels</p>
+    </div>
+    <p class="footer-copy">© 2026 Zack Pizza</p>
+  </footer>
+
+  <nav class="bottom-nav">
+    <a class="nav-tab active" href="index.html">
+      <span class="nav-icon" style="font-size:22px">🏠</span>
+      <span class="nav-label" style="font-size:11px">Home</span>
+    </a>
+    <a class="nav-tab" href="index.html#menu">
+      <span class="nav-icon" style="font-size:22px">🍕</span>
+      <span class="nav-label" style="font-size:11px">Menu</span>
+    </a>
+    <a class="nav-tab" href="cart.html">
+      <span class="nav-icon" style="font-size:22px">🛒</span>
+      <span class="nav-label" style="font-size:11px">Cart</span>
+    </a>
+    <a class="nav-tab" href="#account">
+      <span class="nav-icon" style="font-size:22px">👤</span>
+      <span class="nav-label" style="font-size:11px">Account</span>
+    </a>
+  </nav>
+
+  <script src="assets/js/data.js"></script>
+  <script>
+    (function () {
+      var qs = function (id) { return document.getElementById(id); };
+      var params = new URLSearchParams(window.location.search);
+      var orderId = params.get('id');
+
+      function fmtPrice(n) { return 'RM ' + (Number(n) || 0).toFixed(2); }
+      function escapeHtml(s) {
+        return String(s).replace(/[&<>"']/g, function (c) {
+          return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+        });
+      }
+      function fmtTime(date) {
+        var h = date.getHours(), m = date.getMinutes();
+        var ampm = h >= 12 ? 'PM' : 'AM';
+        h = h % 12; if (h === 0) h = 12;
+        return h + ':' + (m < 10 ? '0' : '') + m + ' ' + ampm;
+      }
+
+      var order = (SAMPLE_DATA.orders || []).filter(function (o) { return o.id === orderId; })[0];
+
+      // Fall back to localStorage-appended orders (created by checkout.js)
+      if (!order) {
+        try {
+          var appended = JSON.parse(localStorage.getItem('zackpizza.orders.appended') || '[]');
+          order = appended.filter(function (o) { return o.id === orderId; })[0];
+        } catch (e) { /* ignore */ }
+      }
+
+      if (!order) {
+        qs('order-id').textContent = orderId || 'Unknown';
+        document.querySelector('.confirmation h1').textContent = 'Order Not Found';
+        return;
+      }
+
+      var outlet = (SAMPLE_DATA.outlets || []).filter(function (o) { return o.id === order.outletId; })[0];
+      var productMap = {};
+      (SAMPLE_DATA.products || []).forEach(function (p) { productMap[p.id] = p; });
+
+      qs('order-id').textContent = order.id;
+      qs('pickup-outlet').textContent = outlet ? outlet.name : 'Lorry';
+      qs('pickup-address').textContent = outlet
+        ? (outlet.todayLocation.name + ' · ' + outlet.todayLocation.address)
+        : '—';
+      qs('pickup-maps').href = outlet && outlet.todayLocation.mapsLink ? outlet.todayLocation.mapsLink : '#';
+      qs('pickup-eta').textContent = fmtTime(new Date(order.pickupETA));
+
+      var itemsHtml = order.items.map(function (i) {
+        var p = productMap[i.productId];
+        return '<div class="order-item-row">' +
+          '<span>' + i.qty + '× ' + escapeHtml(p ? p.name : i.productId) + '</span>' +
+          '<span>' + fmtPrice(i.price * i.qty) + '</span>' +
+        '</div>';
+      }).join('');
+      qs('order-items').innerHTML = itemsHtml;
+
+      qs('order-total').textContent = fmtPrice(order.total);
+
+      var gateway = (SAMPLE_DATA.paymentGateways || []).filter(function (g) { return g.id === order.paymentMethod; })[0];
+      qs('order-payment').textContent = gateway ? gateway.label : (order.paymentMethod === 'cash' ? 'Cash on pickup' : order.paymentMethod);
+    })();
+  </script>
+</body>
+</html>
