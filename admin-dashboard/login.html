@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Login · Zack Pizza</title>
+  <meta name="theme-color" content="#E63946">
+  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/dashboard.css">
+</head>
+<body class="dash-login-body">
+  <main class="login-card card">
+    <div class="login-brand">
+      <span class="login-logo">🍕</span>
+      <h1>Admin Dashboard</h1>
+      <p class="text-muted">Sign in to manage Zack Pizza.</p>
+    </div>
+
+    <form id="admin-login-form" class="form-section" novalidate>
+      <div class="input-group">
+        <label class="input-label" for="input-username">Username</label>
+        <input class="input" id="input-username" name="username" type="text" autocomplete="username" placeholder="admin" required>
+      </div>
+      <div class="input-group">
+        <label class="input-label" for="input-password">Password</label>
+        <input class="input" id="input-password" name="password" type="password" autocomplete="current-password" placeholder="admin" required>
+      </div>
+
+      <p id="login-error" class="form-error" style="display:none; color: var(--color-primary); margin-top: 12px;"></p>
+      <p class="text-muted" style="font-size:12px; margin-top:8px;">Demo credentials: <code>admin</code> / <code>admin</code></p>
+
+      <button id="btn-login" type="submit" class="btn btn-primary btn-lg" style="width:100%; justify-content:center; margin-top:16px;">
+        Sign In →
+      </button>
+    </form>
+  </main>
+
+  <nav class="bottom-nav bottom-nav-admin preview">
+    <a class="nav-tab" href="#"><span class="nav-icon" style="font-size:22px">📊</span><span class="nav-label" style="font-size:11px">Analytics</span></a>
+    <a class="nav-tab" href="#"><span class="nav-icon" style="font-size:22px">🚚</span><span class="nav-label" style="font-size:11px">Outlets</span></a>
+    <a class="nav-tab" href="#"><span class="nav-icon" style="font-size:22px">🍕</span><span class="nav-label" style="font-size:11px">Products</span></a>
+    <a class="nav-tab" href="#"><span class="nav-icon" style="font-size:22px">⚙️</span><span class="nav-label" style="font-size:11px">Settings</span></a>
+  </nav>
+
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/admin-dashboard.js"></script>
+</body>
+</html>
