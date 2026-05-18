@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Checkout · Zack Pizza</title>
+  <meta name="theme-color" content="#E63946">
+  <link rel="stylesheet" href="assets/css/global.css">
+  <link rel="stylesheet" href="assets/css/customer.css">
+</head>
+<body>
+  <header class="site-header container">
+    <a class="brand" href="index.html">🍕 ZACK PIZZA</a>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="index.html#menu">Menu</a>
+      <a href="cart.html">Cart</a>
+    </nav>
+    <a class="btn btn-secondary btn-sm" href="cart.html">← Back to cart</a>
+    <button class="hamburger" type="button" aria-label="Open menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+
+  <main class="container">
+    <h1>Checkout</h1>
+
+    <form id="checkout-form" class="checkout-grid" novalidate>
+      <section class="checkout-form-side">
+        <div class="form-section">
+          <h3>Your details</h3>
+          <div class="input-group">
+            <label class="input-label" for="input-name">Full name</label>
+            <input class="input" id="input-name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="input-group">
+            <label class="input-label" for="input-phone">Phone number</label>
+            <input class="input" id="input-phone" name="phone" type="tel" autocomplete="tel" placeholder="012-345-6789" required>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3>Payment method</h3>
+          <p class="text-muted" style="margin-top:-8px">Demo only — no real charge.</p>
+          <div id="payment-options" class="payment-options-list"></div>
+        </div>
+
+        <p id="form-error" class="form-error" style="display:none; color: var(--color-primary); margin-top: 12px;"></p>
+
+        <button id="btn-pay" type="submit" class="btn btn-primary btn-lg" style="width:100%; justify-content:center; margin-top:16px;">
+          <span id="pay-spinner" style="display:none">⏳ </span>
+          <span id="pay-label">Pay & Place Order →</span>
+        </button>
+      </section>
+
+      <aside class="checkout-summary card">
+        <h3>Order summary</h3>
+        <div id="order-summary-items" class="order-summary-items"></div>
+        <div class="cart-total-row">
+          <span>Subtotal</span>
+          <span id="order-summary-subtotal">RM 0.00</span>
+        </div>
+        <div class="cart-total-row">
+          <span>Pickup</span>
+          <span class="text-muted">Free</span>
+        </div>
+        <div class="cart-total-row cart-total-row-grand">
+          <span>Total</span>
+          <span id="order-summary-total">RM 0.00</span>
+        </div>
+
+        <div class="pickup-info">
+          <p class="text-muted uppercase-micro">Pickup from</p>
+          <p id="order-summary-outlet"><strong>—</strong></p>
+          <p class="text-muted uppercase-micro">Ready by</p>
+          <p id="order-summary-eta"><strong>—</strong></p>
+        </div>
+      </aside>
+    </form>
+  </main>
+
+  <footer class="site-footer container">
+    <div class="footer-brand">
+      <p class="brand">🍕 ZACK PIZZA</p>
+      <p class="tagline">Hot pizza, fresh wheels</p>
+    </div>
+    <p class="footer-copy">© 2026 Zack Pizza</p>
+  </footer>
+
+  <nav class="bottom-nav">
+    <a class="nav-tab" href="index.html">
+      <span class="nav-icon" style="font-size:22px">🏠</span>
+      <span class="nav-label" style="font-size:11px">Home</span>
+    </a>
+    <a class="nav-tab" href="index.html#menu">
+      <span class="nav-icon" style="font-size:22px">🍕</span>
+      <span class="nav-label" style="font-size:11px">Menu</span>
+    </a>
+    <a class="nav-tab active" href="cart.html">
+      <span class="nav-icon" style="font-size:22px">🛒</span>
+      <span class="nav-label" style="font-size:11px">Cart</span>
+      <span class="nav-cart-badge" id="cart-count-badge" style="display:none">0</span>
+    </a>
+    <a class="nav-tab" href="#account">
+      <span class="nav-icon" style="font-size:22px">👤</span>
+      <span class="nav-label" style="font-size:11px">Account</span>
+    </a>
+  </nav>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/cart.js"></script>
+  <script src="assets/js/checkout.js"></script>
+</body>
+</html>
