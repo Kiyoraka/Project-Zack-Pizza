@@ -16,6 +16,11 @@
   align-items: center;
   justify-content: space-between;
   gap: 24px;
+  /* Full-bleed white bg, but inner content aligns to 1200px-centered page container */
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding: 0 max(24px, calc(50vw - 624px));
 }
 
 .site-header .container,
@@ -25,6 +30,10 @@
   align-items: center;
   justify-content: space-between;
   gap: 24px;
+  /* Override .container's max-width clamp so background spans full viewport */
+  max-width: none;
+  margin: 0;
+  padding: 0 max(24px, calc(50vw - 624px));
 }
 
 .site-header .brand {
@@ -176,43 +185,61 @@
   font-size: 24px;
 }
 
-.lorry-card-header h3 {
+.lorry-card-header h3,
+.lorry-card-header .lorry-name {
   margin: 0;
-  font-size: 20px;
+  font-size: 18px;
+  color: var(--color-text);
 }
 
-.lorry-card-body {
-  padding: 0 24px 16px;
-  flex: 1;
+.lorry-card-row {
+  padding: 4px 24px;
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.lorry-card-body .info-row {
-  display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
   font-size: 14px;
   color: var(--color-text-muted);
 }
 
-.lorry-card-body .info-row .icon {
+.lorry-card-row .lorry-icon {
   font-size: 16px;
+  flex-shrink: 0;
+  line-height: 1.5;
 }
 
-.lorry-card-body .badge-active {
-  align-self: flex-start;
-  margin-top: 8px;
+.lorry-location .lorry-location-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lorry-location-name {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.lorry-location-address {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  line-height: 1.4;
 }
 
 .lorry-card-footer {
   padding: 16px 24px 20px;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   border-top: 1px solid var(--color-border);
 }
 
-.lorry-card-footer .btn-primary {
+.lorry-card-footer .badge {
+  align-self: flex-start;
+}
+
+.lorry-card-footer .btn {
   width: 100%;
+  justify-content: center;
 }
 
 /* ===== Menu Preview ===== */
