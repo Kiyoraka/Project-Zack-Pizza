@@ -120,6 +120,24 @@ const SAMPLE_DATA = {
       image: "assets/img/products/sticky-toffee.jpg",
       category: "Desserts",
       available: false
+    },
+    {
+      id: "prod-013",
+      name: "Quattro Formaggi",
+      description: "Four-cheese blend of mozzarella, parmesan, gorgonzola, and ricotta on hand-stretched base.",
+      price: 32.00,
+      image: "assets/img/products/quattro-formaggi.jpg",
+      category: "Classic",
+      available: true
+    },
+    {
+      id: "prod-014",
+      name: "Ayam Percik Pizza",
+      description: "Charcoal-grilled ayam percik with kerisik coconut, fresh ulam herbs, and a swirl of sambal belacan.",
+      price: 36.00,
+      image: "assets/img/products/ayam-percik.jpg",
+      category: "Signature",
+      available: true
     }
   ],
 
@@ -129,20 +147,20 @@ const SAMPLE_DATA = {
       name: "Lorry 1 - The Cheese Wagon",
       crew: ["Ali", "Siti"],
       todayLocation: {
-        name: "Bangsar Park",
-        address: "Jalan Maarof, Bangsar, 59000 Kuala Lumpur",
-        mapsLink: "https://maps.google.com/?q=Bangsar+Park+Kuala+Lumpur",
+        name: "Pasar Siti Khadijah",
+        address: "Jalan Buluh Kubu, 15000 Kota Bharu, Kelantan",
+        mapsLink: "https://maps.google.com/?q=Pasar+Siti+Khadijah+Kota+Bharu",
         hoursStart: "17:00",
         hoursEnd: "23:00"
       },
       weekSchedule: [
-        { day: "Mon", location: "Bangsar Park" },
-        { day: "Tue", location: "Bangsar Park" },
-        { day: "Wed", location: "TTDI Plaza" },
-        { day: "Thu", location: "Bangsar Park" },
-        { day: "Fri", location: "Bangsar Park" },
-        { day: "Sat", location: "Desa Sri Hartamas" },
-        { day: "Sun", location: "Bangsar Park" }
+        { day: "Mon", location: "Pasar Siti Khadijah" },
+        { day: "Tue", location: "Pasar Siti Khadijah" },
+        { day: "Wed", location: "Medan MPKB" },
+        { day: "Thu", location: "Pasar Siti Khadijah" },
+        { day: "Fri", location: "Pasar Siti Khadijah" },
+        { day: "Sat", location: "Padang Merdeka" },
+        { day: "Sun", location: "Pasar Siti Khadijah" }
       ],
       status: "active",
       outOfStockToday: ["prod-006"]
@@ -152,20 +170,20 @@ const SAMPLE_DATA = {
       name: "Lorry 2 - Spice Express",
       crew: ["Hafiz", "Nurul"],
       todayLocation: {
-        name: "KLCC Park",
-        address: "Jalan Ampang, 50450 Kuala Lumpur",
-        mapsLink: "https://maps.google.com/?q=KLCC+Park",
+        name: "Wakaf Che Yeh",
+        address: "Jalan Long Yunus, Wakaf Che Yeh, 15050 Kota Bharu, Kelantan",
+        mapsLink: "https://maps.google.com/?q=Wakaf+Che+Yeh+Night+Market",
         hoursStart: "16:00",
         hoursEnd: "23:00"
       },
       weekSchedule: [
-        { day: "Mon", location: "KLCC Park" },
-        { day: "Tue", location: "KLCC Park" },
-        { day: "Wed", location: "KLCC Park" },
-        { day: "Thu", location: "Ampang Point" },
-        { day: "Fri", location: "KLCC Park" },
-        { day: "Sat", location: "KLCC Park" },
-        { day: "Sun", location: "Setiawangsa" }
+        { day: "Mon", location: "Wakaf Che Yeh" },
+        { day: "Tue", location: "Wakaf Che Yeh" },
+        { day: "Wed", location: "Wakaf Che Yeh" },
+        { day: "Thu", location: "Kubang Kerian" },
+        { day: "Fri", location: "Wakaf Che Yeh" },
+        { day: "Sat", location: "Wakaf Che Yeh" },
+        { day: "Sun", location: "Pengkalan Chepa" }
       ],
       status: "active",
       outOfStockToday: ["prod-012"]
@@ -175,20 +193,20 @@ const SAMPLE_DATA = {
       name: "Lorry 3 - Veggie Voyager",
       crew: ["Priya", "Kumar"],
       todayLocation: {
-        name: "Subang SS15",
-        address: "Jalan SS15/4, SS 15, 47500 Subang Jaya, Selangor",
-        mapsLink: "https://maps.google.com/?q=SS15+Subang+Jaya",
+        name: "Stadium Sultan Muhammad IV",
+        address: "Jalan Tok Hakim, 15000 Kota Bharu, Kelantan",
+        mapsLink: "https://maps.google.com/?q=Stadium+Sultan+Muhammad+IV+Kota+Bharu",
         hoursStart: "17:00",
         hoursEnd: "00:00"
       },
       weekSchedule: [
-        { day: "Mon", location: "Subang SS15" },
-        { day: "Tue", location: "USJ Taipan" },
-        { day: "Wed", location: "Subang SS15" },
-        { day: "Thu", location: "Subang SS15" },
-        { day: "Fri", location: "Subang SS15" },
-        { day: "Sat", location: "Empire Subang" },
-        { day: "Sun", location: "Subang SS15" }
+        { day: "Mon", location: "Stadium Sultan Muhammad IV" },
+        { day: "Tue", location: "Tunjong" },
+        { day: "Wed", location: "Stadium Sultan Muhammad IV" },
+        { day: "Thu", location: "Stadium Sultan Muhammad IV" },
+        { day: "Fri", location: "Stadium Sultan Muhammad IV" },
+        { day: "Sat", location: "Padang Polo" },
+        { day: "Sun", location: "Stadium Sultan Muhammad IV" }
       ],
       status: "active",
       outOfStockToday: []
@@ -198,20 +216,20 @@ const SAMPLE_DATA = {
       name: "Lorry 4 - Crust Cruiser",
       crew: ["Wei Ming", "Aisyah"],
       todayLocation: {
-        name: "Mont Kiara Plaza Damas",
-        address: "Jalan Sri Hartamas 1, Plaza Damas, 50480 Kuala Lumpur",
-        mapsLink: "https://maps.google.com/?q=Plaza+Damas+Mont+Kiara",
+        name: "Medan MPKB",
+        address: "Jalan Doktor, 15000 Kota Bharu, Kelantan",
+        mapsLink: "https://maps.google.com/?q=Medan+MPKB+Kota+Bharu",
         hoursStart: "18:00",
         hoursEnd: "00:00"
       },
       weekSchedule: [
-        { day: "Mon", location: "Mont Kiara Plaza Damas" },
-        { day: "Tue", location: "Mont Kiara Plaza Damas" },
-        { day: "Wed", location: "Solaris Dutamas" },
-        { day: "Thu", location: "Mont Kiara Plaza Damas" },
-        { day: "Fri", location: "Mont Kiara Plaza Damas" },
-        { day: "Sat", location: "Mont Kiara Plaza Damas" },
-        { day: "Sun", location: "Hartamas Shopping Centre" }
+        { day: "Mon", location: "Medan MPKB" },
+        { day: "Tue", location: "Medan MPKB" },
+        { day: "Wed", location: "Pasar Besar Kota Bharu" },
+        { day: "Thu", location: "Medan MPKB" },
+        { day: "Fri", location: "Medan MPKB" },
+        { day: "Sat", location: "Medan MPKB" },
+        { day: "Sun", location: "Jalan PCB" }
       ],
       status: "active",
       outOfStockToday: ["prod-003", "prod-008"]
@@ -221,20 +239,112 @@ const SAMPLE_DATA = {
       name: "Lorry 5 - Saucy Roamer",
       crew: ["Ahmad", "Mei Lin"],
       todayLocation: {
-        name: "Bandar Sunway",
-        address: "Jalan PJS 11/15, Bandar Sunway, 47500 Petaling Jaya, Selangor",
-        mapsLink: "https://maps.google.com/?q=Bandar+Sunway+Pyramid",
+        name: "Pengkalan Chepa",
+        address: "Jalan Pengkalan Chepa, 16100 Kota Bharu, Kelantan",
+        mapsLink: "https://maps.google.com/?q=Pengkalan+Chepa+Kelantan",
         hoursStart: "17:00",
         hoursEnd: "23:00"
       },
       weekSchedule: [
-        { day: "Mon", location: "Bandar Sunway" },
-        { day: "Tue", location: "Bandar Sunway" },
-        { day: "Wed", location: "Bandar Sunway" },
-        { day: "Thu", location: "Bandar Sunway" },
-        { day: "Fri", location: "Bandar Sunway" },
-        { day: "Sat", location: "Bandar Sunway" },
-        { day: "Sun", location: "Bandar Sunway" }
+        { day: "Mon", location: "Pengkalan Chepa" },
+        { day: "Tue", location: "Pengkalan Chepa" },
+        { day: "Wed", location: "Pengkalan Chepa" },
+        { day: "Thu", location: "Pengkalan Chepa" },
+        { day: "Fri", location: "Pengkalan Chepa" },
+        { day: "Sat", location: "Pengkalan Chepa" },
+        { day: "Sun", location: "Pengkalan Chepa" }
+      ],
+      status: "closed-today",
+      outOfStockToday: []
+    },
+    {
+      id: "lorry-6",
+      name: "Lorry 6 - Pantai Pizza",
+      crew: ["Faiz", "Liyana"],
+      todayLocation: {
+        name: "Pantai Irama",
+        address: "Pantai Irama, 16300 Bachok, Kelantan",
+        mapsLink: "https://maps.google.com/?q=Pantai+Irama+Bachok+Kelantan",
+        hoursStart: "16:00",
+        hoursEnd: "23:00"
+      },
+      weekSchedule: [
+        { day: "Mon", location: "Pantai Irama" },
+        { day: "Tue", location: "Pantai Irama" },
+        { day: "Wed", location: "Pantai Bisikan Bayu" },
+        { day: "Thu", location: "Pantai Irama" },
+        { day: "Fri", location: "Pantai Irama" },
+        { day: "Sat", location: "Pantai Irama" },
+        { day: "Sun", location: "Bachok Town" }
+      ],
+      status: "active",
+      outOfStockToday: ["prod-009"]
+    },
+    {
+      id: "lorry-7",
+      name: "Lorry 7 - Sungai Wagon",
+      crew: ["Rashid", "Farah"],
+      todayLocation: {
+        name: "Kuala Krai Town",
+        address: "Jalan Besar, 18000 Kuala Krai, Kelantan",
+        mapsLink: "https://maps.google.com/?q=Kuala+Krai+Kelantan",
+        hoursStart: "17:00",
+        hoursEnd: "23:00"
+      },
+      weekSchedule: [
+        { day: "Mon", location: "Kuala Krai Town" },
+        { day: "Tue", location: "Dabong" },
+        { day: "Wed", location: "Kuala Krai Town" },
+        { day: "Thu", location: "Kuala Krai Town" },
+        { day: "Fri", location: "Kuala Krai Town" },
+        { day: "Sat", location: "Manek Urai" },
+        { day: "Sun", location: "Kuala Krai Town" }
+      ],
+      status: "active",
+      outOfStockToday: ["prod-013"]
+    },
+    {
+      id: "lorry-8",
+      name: "Lorry 8 - Border Bites",
+      crew: ["Zaki", "Norina"],
+      todayLocation: {
+        name: "Rantau Panjang",
+        address: "Jalan Pasar, 17200 Rantau Panjang, Pasir Mas, Kelantan",
+        mapsLink: "https://maps.google.com/?q=Rantau+Panjang+Pasir+Mas+Kelantan",
+        hoursStart: "17:00",
+        hoursEnd: "23:00"
+      },
+      weekSchedule: [
+        { day: "Mon", location: "Rantau Panjang" },
+        { day: "Tue", location: "Rantau Panjang" },
+        { day: "Wed", location: "Pasir Mas Town" },
+        { day: "Thu", location: "Rantau Panjang" },
+        { day: "Fri", location: "Rantau Panjang" },
+        { day: "Sat", location: "Rantau Panjang" },
+        { day: "Sun", location: "Pasir Mas Town" }
+      ],
+      status: "closed-today",
+      outOfStockToday: []
+    },
+    {
+      id: "lorry-9",
+      name: "Lorry 9 - Highland Crust",
+      crew: ["Iskandar", "Atikah"],
+      todayLocation: {
+        name: "Gua Musang Town",
+        address: "Jalan Persiaran Raya, 18300 Gua Musang, Kelantan",
+        mapsLink: "https://maps.google.com/?q=Gua+Musang+Kelantan",
+        hoursStart: "17:00",
+        hoursEnd: "23:00"
+      },
+      weekSchedule: [
+        { day: "Mon", location: "Gua Musang Town" },
+        { day: "Tue", location: "Gua Musang Town" },
+        { day: "Wed", location: "Gua Musang Town" },
+        { day: "Thu", location: "Bertam Baru" },
+        { day: "Fri", location: "Gua Musang Town" },
+        { day: "Sat", location: "Gua Musang Town" },
+        { day: "Sun", location: "Gua Musang Town" }
       ],
       status: "closed-today",
       outOfStockToday: []
