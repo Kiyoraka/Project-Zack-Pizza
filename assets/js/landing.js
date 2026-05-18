@@ -70,17 +70,111 @@
     ].join('');
   }
 
-  function renderActiveLorries(outlets) {
-    var active = outlets.filter(function (o) { return o.status === 'active'; });
-    var html = active.map(function (o) { return lorryCardHtml(o, true); }).join('');
-    setHtml('active-lorries-grid', html || '<p class="empty-state">No lorries active right now.</p>');
+  function getFilteredOutlets(outlets, query) {
+    if (!query) return outlets;
+    var q = query.toLowerCase().trim();
+    if (!q) return outlets;
+    return outlets.filter(function (o) {
+      var loc = o.todayLocation || {};
+      var weekLocs = (o.weekSchedule || []).map(function (s) { return s.location || ''; }).join(' ');
+      var hay = [o.name, loc.name, loc.address, weekLocs].join(' ').toLowerCase();
+      return hay.indexOf(q) !== -1;
+    });
   }
 
-  function renderAllLorries(outlets) {
+  function emptyStateHtml(query) {
+    var msg = query
+      ? 'No lorries match &ldquo;' + escapeHtml(query) + '&rdquo;.'
+      : 'No lorries active right now.';
+    return '<p class="empty-state">' + msg + '</p>';
+  }
+
+  function renderActiveLorries(outlets, query) {
+    var active = outlets.filter(function (o) { return o.status === 'active'; });
+    var html = active.map(function (o) { return lorryCardHtml(o, true); }).join('');
+    setHtml('active-lorries-grid', html || emptyStateHtml(query));
+    renderDots('active-lorries-grid', 'active-lorries-dots', active.length);
+  }
+
+  function renderAllLorries(outlets, query) {
     var html = outlets.map(function (o) {
       return lorryCardHtml(o, o.status === 'active');
     }).join('');
-    setHtml('all-lorries-grid', html);
+    setHtml('all-lorries-grid', html || emptyStateHtml(query));
+    renderDots('all-lorries-grid', 'all-lorries-dots', outlets.length);
+  }
+
+  // ---------- Carousel dots (mobile) ----------
+  function renderDots(gridId, dotsId, count) {
+    var dots = document.getElementById(dotsId);
+    var grid = document.getElementById(gridId);
+    if (!dots || !grid) return;
+
+    if (count <= 1) {
+      dots.innerHTML = '';
+      return;
+    }
+
+    var html = '';
+    for (var i = 0; i < count; i++) {
+      html += '<button type="button" class="carousel-dot' + (i === 0 ? ' active' : '') +
+              '" data-index="' + i + '" aria-label="Go to lorry ' + (i + 1) + '"></button>';
+    }
+    dots.innerHTML = html;
+
+    // Tap-to-jump
+    dots.querySelectorAll('.carousel-dot').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var idx = Number(btn.getAttribute('data-index')) || 0;
+        var card = grid.children[idx];
+        if (card && typeof card.scrollIntoView === 'function') {
+          card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+      });
+    });
+
+    // Sync active dot on scroll (mobile only — desktop hides dots via CSS)
+    var syncing = false;
+    grid.addEventListener('scroll', function () {
+      if (syncing) return;
+      syncing = true;
+      window.requestAnimationFrame(function () {
+        syncing = false;
+        var first = grid.children[0];
+        if (!first) return;
+        var cardWidth = first.getBoundingClientRect().width + 16; // gap
+        var active = Math.round(grid.scrollLeft / cardWidth);
+        var btns = dots.querySelectorAll('.carousel-dot');
+        btns.forEach(function (b, i) {
+          b.classList.toggle('active', i === active);
+        });
+      });
+    });
+  }
+
+  // ---------- Search wiring ----------
+  function wireLorrySearch(outlets) {
+    var input = document.getElementById('lorry-search-input');
+    var clear = document.getElementById('lorry-search-clear');
+    if (!input) return;
+
+    function rerender() {
+      var q = input.value;
+      var filtered = getFilteredOutlets(outlets, q);
+      renderActiveLorries(filtered, q);
+      renderAllLorries(filtered, q);
+      if (clear) clear.hidden = !q;
+    }
+
+    input.addEventListener('input', rerender);
+    if (clear) {
+      clear.addEventListener('click', function () {
+        input.value = '';
+        clear.hidden = true;
+        rerender();
+        input.focus();
+      });
+    }
   }
 
   // ---------- Menu preview ----------
@@ -205,11 +299,13 @@
     }
 
     setText('today-date', formatTodayDate(new Date()));
-    renderActiveLorries(SAMPLE_DATA.outlets || []);
-    renderAllLorries(SAMPLE_DATA.outlets || []);
+    var outlets = SAMPLE_DATA.outlets || [];
+    renderActiveLorries(outlets, '');
+    renderAllLorries(outlets, '');
     renderMenuPreview(SAMPLE_DATA.products || []);
-    renderWeekRoute(SAMPLE_DATA.outlets || []);
+    renderWeekRoute(outlets);
     renderCartBadge();
+    wireLorrySearch(outlets);
   }
 
   if (document.readyState === 'loading') {

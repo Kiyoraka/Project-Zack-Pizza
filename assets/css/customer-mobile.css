@@ -94,10 +94,67 @@
   .section-head #today-date {
     font-size: 14px;
   }
-  .lorry-grid,
   .menu-grid,
   .outlet-menu-grid {
     grid-template-columns: 1fr;
+  }
+
+  /* Lorry grids become horizontal scroll-snap carousels on mobile */
+  .lorry-search {
+    max-width: 100%;
+  }
+
+  #active-lorries-grid,
+  #all-lorries-grid {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 16px;
+    -webkit-overflow-scrolling: touch;
+    padding: 4px 16px 12px;
+    margin: 16px -16px 0;
+    scrollbar-width: none;
+  }
+  #active-lorries-grid::-webkit-scrollbar,
+  #all-lorries-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  #active-lorries-grid > .lorry-card,
+  #all-lorries-grid > .lorry-card {
+    flex: 0 0 85vw;
+    max-width: 360px;
+    scroll-snap-align: center;
+  }
+
+  /* Empty state still spans full width even inside flex carousel */
+  #active-lorries-grid > .empty-state,
+  #all-lorries-grid > .empty-state {
+    flex: 1 0 100%;
+  }
+
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-border);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: background 0.18s, transform 0.18s;
+  }
+  .carousel-dot.active {
+    background: var(--color-primary);
+    transform: scale(1.3);
   }
 
   /* Outlet */

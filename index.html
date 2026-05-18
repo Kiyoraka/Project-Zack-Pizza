@@ -45,9 +45,24 @@
         <span id="today-date" class="text-muted">...</span>
       </div>
       <h2>Find your lorry today</h2>
+
+      <div class="lorry-search">
+        <span class="lorry-search-icon" aria-hidden="true">🔍</span>
+        <input
+          type="search"
+          id="lorry-search-input"
+          class="input lorry-search-input"
+          placeholder="Search lorries or locations…"
+          autocomplete="off"
+        >
+        <button type="button" id="lorry-search-clear" class="lorry-search-clear" aria-label="Clear search" hidden>×</button>
+      </div>
+
       <div id="active-lorries-grid" class="lorry-grid"></div>
+      <div class="carousel-dots" id="active-lorries-dots"></div>
+
       <div class="section-footer">
-        <a class="btn-ghost" href="#all-lorries">View all 5 lorries ↓</a>
+        <a class="btn-ghost" href="#all-lorries">View all lorries ↓</a>
       </div>
     </section>
 
@@ -65,6 +80,7 @@
     <section id="all-lorries" class="lorries-section container">
       <h2>All Our Lorries</h2>
       <div id="all-lorries-grid" class="lorry-grid"></div>
+      <div class="carousel-dots" id="all-lorries-dots"></div>
     </section>
   </main>
 

@@ -164,6 +164,71 @@
   margin-top: 32px;
 }
 
+/* ===== Lorry Search ===== */
+.lorry-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 16px 0 24px;
+  max-width: 480px;
+}
+
+.lorry-search-icon {
+  position: absolute;
+  left: 14px;
+  font-size: 16px;
+  pointer-events: none;
+  line-height: 1;
+}
+
+.lorry-search-input {
+  padding-left: 42px;
+  padding-right: 40px;
+  width: 100%;
+}
+
+.lorry-search-clear {
+  position: absolute;
+  right: 8px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background 0.15s, color 0.15s;
+}
+
+.lorry-search-clear:hover {
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.lorry-search-clear[hidden] {
+  display: none;
+}
+
+/* ===== Carousel Dots (mobile only - hidden on desktop) ===== */
+.carousel-dots {
+  display: none;
+}
+
+/* ===== Empty State (filter) ===== */
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 32px 16px;
+  color: var(--color-text-muted);
+  font-size: 15px;
+}
+
 /* Tablet + mobile overrides moved to assets/css/customer-mobile.css */
 
 .lorry-card {
