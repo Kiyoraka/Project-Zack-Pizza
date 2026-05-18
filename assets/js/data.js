@@ -3,7 +3,7 @@
 const SAMPLE_DATA = {
   brand: {
     name: "Zack Pizza",
-    tagline: "Hot pizza, fresh wheels",
+    tagline: "Fresh pizza, hot wheels",
     logo: "assets/img/logo.svg",
     contact: {
       phone: "03-2284-9001",
