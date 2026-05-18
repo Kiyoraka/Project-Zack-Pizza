@@ -104,9 +104,15 @@
   }
 
   function renderMenuPreview(products) {
+    // Landing page preview: pizza only (Classic + Signature). Full catalog renders on outlet.html
+    var PIZZA_CATEGORIES = ['Classic', 'Signature'];
+    var pizzas = products.filter(function (p) {
+      return PIZZA_CATEGORIES.indexOf(p.category) !== -1;
+    });
+
     var groups = {};
     var order = [];
-    products.forEach(function (p) {
+    pizzas.forEach(function (p) {
       if (!groups[p.category]) {
         groups[p.category] = [];
         order.push(p.category);
