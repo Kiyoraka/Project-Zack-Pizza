@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Zack Pizza - Order from your lorry</title>
+  <meta name="description" content="Order pizza from your nearest Zack Pizza lorry. Hot pizza, fresh wheels.">
+  <meta name="theme-color" content="#E63946">
+  <link rel="stylesheet" href="assets/css/global.css">
+  <link rel="stylesheet" href="assets/css/customer.css">
+</head>
+<body>
+  <header class="site-header container">
+    <a class="brand" href="index.html">🍕 ZACK PIZZA</a>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="index.html#menu">Menu</a>
+      <a href="index.html#find-us">Find Us</a>
+    </nav>
+    <button id="open-cart-drawer" class="btn btn-secondary btn-sm" type="button">
+      🛒 Cart <span id="header-cart-count">0</span>
+    </button>
+    <button class="hamburger" type="button" aria-label="Open menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+
+  <main>
+    <section class="outlet-hero">
+      <div class="container">
+        <h1 id="outlet-name">Loading lorry...</h1>
+        <p id="outlet-address" class="outlet-address"></p>
+        <div class="outlet-meta">
+          <span id="outlet-hours" class="outlet-meta-row"></span>
+          <span id="outlet-status" class="badge badge-active"></span>
+        </div>
+        <div id="outlet-crew" class="outlet-crew"></div>
+        <a id="outlet-maps" class="btn btn-secondary btn-sm" href="#" target="_blank" rel="noopener">View on Maps →</a>
+      </div>
+    </section>
+
+    <section class="outlet-menu container">
+      <nav id="category-tabs" class="category-tabs"></nav>
+      <div id="outlet-menu-grid" class="outlet-menu-grid"></div>
+    </section>
+  </main>
+
+  <aside id="cart-drawer" class="drawer" aria-label="Your cart">
+    <div class="drawer-header">
+      <h3 class="modal-title">Your Cart</h3>
+      <button id="close-cart-drawer" class="modal-close" type="button" aria-label="Close cart">×</button>
+    </div>
+    <div id="cart-drawer-body" class="drawer-body">
+      <p class="cart-empty text-muted">Your cart is empty. Add something delicious!</p>
+    </div>
+    <div class="drawer-footer">
+      <div class="cart-totals">
+        <div class="cart-total-row">
+          <span>Subtotal</span>
+          <span id="drawer-subtotal">RM 0.00</span>
+        </div>
+        <div class="cart-total-row cart-total-row-grand">
+          <span>Total</span>
+          <span id="drawer-total">RM 0.00</span>
+        </div>
+      </div>
+      <a id="drawer-checkout" class="btn btn-primary btn-lg" href="cart.html" style="width:100%; justify-content:center;">Proceed to Checkout →</a>
+    </div>
+  </aside>
+
+  <div id="mobile-cart-bar" class="mobile-cart-bar" style="display:none">
+    <span><span id="mobile-cart-count">0</span> items · <span id="mobile-cart-total">RM 0.00</span></span>
+    <a href="cart.html">View →</a>
+  </div>
+
+  <footer class="site-footer container">
+    <div class="footer-brand">
+      <p class="brand">🍕 ZACK PIZZA</p>
+      <p class="tagline">Hot pizza, fresh wheels</p>
+    </div>
+    <p class="footer-copy">© 2026 Zack Pizza</p>
+  </footer>
+
+  <nav class="bottom-nav">
+    <a class="nav-tab" href="index.html">
+      <span class="nav-icon" style="font-size:22px">🏠</span>
+      <span class="nav-label" style="font-size:11px">Home</span>
+    </a>
+    <a class="nav-tab active" href="#">
+      <span class="nav-icon" style="font-size:22px">🍕</span>
+      <span class="nav-label" style="font-size:11px">Menu</span>
+    </a>
+    <a class="nav-tab" href="cart.html">
+      <span class="nav-icon" style="font-size:22px">🛒</span>
+      <span class="nav-label" style="font-size:11px">Cart</span>
+      <span class="nav-cart-badge" id="cart-count-badge" style="display:none">0</span>
+    </a>
+    <a class="nav-tab" href="#account">
+      <span class="nav-icon" style="font-size:22px">👤</span>
+      <span class="nav-label" style="font-size:11px">Account</span>
+    </a>
+  </nav>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/cart.js"></script>
+  <script src="assets/js/outlet.js"></script>
+</body>
+</html>
