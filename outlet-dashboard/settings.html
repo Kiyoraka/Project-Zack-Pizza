@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Settings · Outlet Dashboard · Zack Pizza</title>
+  <meta name="theme-color" content="#E63946">
+  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/dashboard.css">
+</head>
+<body>
+  <div class="dash-shell">
+    <aside class="dash-sidebar">
+      <div class="dash-brand">
+        <p class="brand">🍕 ZACK PIZZA</p>
+        <p class="text-muted uppercase-micro">Outlet</p>
+      </div>
+      <nav class="dash-nav">
+        <a class="dash-nav-item" href="orders.html">
+          <span class="dash-nav-icon">📋</span>
+          <span>Orders</span>
+        </a>
+        <a class="dash-nav-item" href="products.html">
+          <span class="dash-nav-icon">🍕</span>
+          <span>Products</span>
+        </a>
+        <a class="dash-nav-item active" href="settings.html">
+          <span class="dash-nav-icon">⚙️</span>
+          <span>Settings</span>
+        </a>
+      </nav>
+      <button id="btn-logout" class="btn btn-ghost btn-sm" type="button" style="margin-top:auto;">
+        ← Logout
+      </button>
+    </aside>
+
+    <header class="mobile-dash-header">
+      <button class="hamburger" type="button" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+      <span class="mobile-dash-title">Settings</span>
+      <button id="btn-logout-mobile" class="btn btn-ghost btn-sm" type="button">Logout</button>
+    </header>
+
+    <main class="dash-main">
+      <header class="dash-header">
+        <div>
+          <h1>Today's Location & Hours</h1>
+          <p class="text-muted">Where are you parked today, and when are you open?</p>
+        </div>
+      </header>
+
+      <form id="settings-form" class="form-section" novalidate>
+        <div class="form-section">
+          <h3>Today's Spot</h3>
+          <div class="input-group">
+            <label class="input-label" for="set-location-name">Location name</label>
+            <input class="input" id="set-location-name" name="location-name" type="text" placeholder="Bangsar Park" required>
+          </div>
+          <div class="input-group">
+            <label class="input-label" for="set-address">Full address</label>
+            <input class="input" id="set-address" name="address" type="text" placeholder="Jalan Maarof, Bangsar, 59000 KL" required>
+          </div>
+          <div class="input-group">
+            <label class="input-label" for="set-maps-link">Google Maps URL</label>
+            <input class="input" id="set-maps-link" name="maps-link" type="url" placeholder="https://maps.app.goo.gl/...">
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3>Hours Today</h3>
+          <div class="form-row">
+            <div class="input-group">
+              <label class="input-label" for="set-hours-start">Open</label>
+              <input class="input" id="set-hours-start" name="hours-start" type="time" required>
+            </div>
+            <div class="input-group">
+              <label class="input-label" for="set-hours-end">Close</label>
+              <input class="input" id="set-hours-end" name="hours-end" type="time" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3>Status</h3>
+          <label class="payment-option" data-status="active">
+            <input type="radio" name="status" value="active" checked>
+            <span class="payment-label">🟢 Active — Taking orders today</span>
+          </label>
+          <label class="payment-option" data-status="closed-today">
+            <input type="radio" name="status" value="closed-today">
+            <span class="payment-label">🔴 Closed today</span>
+          </label>
+        </div>
+
+        <div class="form-section">
+          <h3>Contact (for today only)</h3>
+          <div class="input-group">
+            <label class="input-label" for="set-contact-phone">Crew phone</label>
+            <input class="input" id="set-contact-phone" name="contact-phone" type="tel" placeholder="012-345-6789">
+          </div>
+        </div>
+
+        <p id="settings-saved" class="text-muted" style="display:none; color: var(--color-success);">✓ Saved</p>
+
+        <button id="btn-save-settings" type="submit" class="btn btn-primary btn-lg" style="width:100%; justify-content:center;">
+          Save Changes
+        </button>
+      </form>
+    </main>
+  </div>
+
+  <nav class="bottom-nav bottom-nav-outlet">
+    <a class="nav-tab" href="orders.html"><span class="nav-icon" style="font-size:22px">📋</span><span class="nav-label" style="font-size:11px">Orders</span></a>
+    <a class="nav-tab" href="products.html"><span class="nav-icon" style="font-size:22px">🍕</span><span class="nav-label" style="font-size:11px">Products</span></a>
+    <a class="nav-tab active" href="settings.html"><span class="nav-icon" style="font-size:22px">⚙️</span><span class="nav-label" style="font-size:11px">Settings</span></a>
+  </nav>
+
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/outlet-dashboard.js"></script>
+</body>
+</html>
