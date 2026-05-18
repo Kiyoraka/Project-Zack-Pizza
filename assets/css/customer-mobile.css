@@ -35,27 +35,51 @@
 
   /* Hero */
   .hero-band {
-    padding: 48px 0;
+    padding: 48px 20px;
   }
   .hero-band h1 {
     font-size: 32px;
   }
   .hero-band .hero-subtitle {
     font-size: 16px;
+    margin-bottom: 28px;
   }
   .hero-band .hero-ctas {
+    display: flex;
     flex-direction: column;
     align-items: stretch;
+    gap: 14px;
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
   }
   .hero-band .btn {
     width: 100%;
+    padding: 16px 24px;
   }
 
-  /* Sections collapse padding */
+  /* Sections collapse padding with breathing room */
   .lorries-section,
   .menu-preview,
   .week-route-section {
-    padding: 40px 0;
+    padding: 40px 16px;
+  }
+
+  /* Section pill + heading spacing on mobile */
+  .section-pill {
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+  .lorries-section h2,
+  .menu-preview h2,
+  .week-route-section h2 {
+    margin: 0 0 24px;
+    font-size: 26px;
+    line-height: 1.2;
+  }
+  .lorries-section .section-head,
+  .lorries-section .section-pill + * {
+    margin-top: 4px;
   }
   .lorry-grid,
   .menu-grid,
