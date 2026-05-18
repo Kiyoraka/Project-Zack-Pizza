@@ -259,7 +259,7 @@
     setHtml('week-route-grid', header + rows);
   }
 
-  // ---------- Week route mobile cards (day-first) ----------
+  // ---------- Week route mobile cards (day-first, accordion) ----------
   function renderWeekRouteCards(outlets) {
     var days = [
       { abbr: 'Mon', full: 'Monday' },
@@ -270,6 +270,10 @@
       { abbr: 'Sat', full: 'Saturday' },
       { abbr: 'Sun', full: 'Sunday' }
     ];
+
+    // Today expanded by default; JS Date.getDay() returns 0=Sun..6=Sat
+    var todayIdx = (new Date().getDay() + 6) % 7; // shift so 0=Mon..6=Sun
+    var todayAbbr = days[todayIdx].abbr;
 
     var html = days.map(function (d) {
       var rows = outlets.map(function (o) {
@@ -283,14 +287,18 @@
         ].join('');
       }).join('');
 
+      var isOpen = d.abbr === todayAbbr;
+      var isToday = isOpen;
+
       return [
-        '<article class="day-card">',
-          '<header class="day-card-head">',
-            '<h3 class="day-card-title">' + d.full + '</h3>',
+        '<details class="day-card"' + (isOpen ? ' open' : '') + '>',
+          '<summary class="day-card-head">',
+            '<span class="day-card-title">' + d.full + (isToday ? ' <span class="day-card-today">TODAY</span>' : '') + '</span>',
             '<span class="day-card-meta">' + outlets.length + ' lorries</span>',
-          '</header>',
+            '<span class="day-card-chevron" aria-hidden="true">&#x25BE;</span>',
+          '</summary>',
           '<ul class="day-card-list">', rows, '</ul>',
-        '</article>'
+        '</details>'
       ].join('');
     }).join('');
 
