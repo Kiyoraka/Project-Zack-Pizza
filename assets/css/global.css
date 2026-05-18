@@ -434,3 +434,32 @@ p {
 .text-center {
   text-align: center;
 }
+
+.uppercase-micro {
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+/* ===== Accessibility & Mobile Polish (Phase 7) ===== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 16px;
+  }
+  h1 {
+    font-size: 32px;
+  }
+  body {
+    padding-bottom: 80px;
+  }
+}
