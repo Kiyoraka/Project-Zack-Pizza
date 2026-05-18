@@ -452,17 +452,7 @@ p {
   }
 }
 
-@media (max-width: 768px) {
-  .container {
-    padding: 0 16px;
-  }
-  h1 {
-    font-size: 32px;
-  }
-  body {
-    padding-bottom: 80px;
-  }
-}
+/* Viewport overrides moved to assets/css/global-mobile.css */
 
 /* ===== Focus Visible (Phase 7 Polish) ===== */
 *:focus {

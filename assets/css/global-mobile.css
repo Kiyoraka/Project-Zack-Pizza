@@ -1,0 +1,17 @@
+/* ============================================================
+   global-mobile.css — viewport-based overrides for global.css
+   Loaded alongside global.css; contains only @media blocks.
+   Keeps the desktop baseline conflict-free.
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 16px;
+  }
+  h1 {
+    font-size: 32px;
+  }
+  body {
+    padding-bottom: 80px;
+  }
+}

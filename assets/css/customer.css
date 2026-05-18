@@ -152,11 +152,7 @@
   margin-top: 32px;
 }
 
-@media (max-width: 1024px) {
-  .lorry-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
+/* Tablet + mobile overrides moved to assets/css/customer-mobile.css */
 
 .lorry-card {
   background: #FFFFFF;
@@ -269,11 +265,7 @@
   margin-top: 8px;
 }
 
-@media (max-width: 1024px) {
-  .menu-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
+/* .menu-grid tablet override moved to customer-mobile.css */
 
 .menu-item {
   background: #FFFFFF;
@@ -512,11 +504,7 @@
   gap: 20px;
 }
 
-@media (max-width: 1024px) {
-  .outlet-menu-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
+/* .outlet-menu-grid tablet override moved to customer-mobile.css */
 
 .btn-add {
   background: var(--color-primary);
@@ -1002,134 +990,8 @@
 }
 
 /* ============================================================
-   Mobile Overrides (max-width: 768px)
+   Mobile + tablet overrides moved to assets/css/customer-mobile.css
    ============================================================ */
-@media (max-width: 768px) {
-  /* Header */
-  .site-header {
-    height: 56px;
-  }
-  .site-nav {
-    display: none;
-  }
-  .site-header .header-cta {
-    display: none;
-  }
-  .hamburger {
-    display: inline-flex;
-  }
-
-  /* Hero */
-  .hero-band {
-    padding: 48px 0;
-  }
-  .hero-band h1 {
-    font-size: 32px;
-  }
-  .hero-band .hero-subtitle {
-    font-size: 16px;
-  }
-  .hero-band .hero-ctas {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .hero-band .btn {
-    width: 100%;
-  }
-
-  /* Lorries */
-  .lorries-section,
-  .menu-preview,
-  .week-route {
-    padding: 40px 0;
-  }
-  .lorry-grid,
-  .menu-grid,
-  .outlet-menu-grid {
-    grid-template-columns: 1fr;
-  }
-
-  /* Week schedule → vertical stack */
-  .week-table {
-    grid-template-columns: 1fr;
-  }
-  .week-day {
-    min-width: 0;
-  }
-
-  /* Outlet */
-  .outlet-hero {
-    padding: 40px 0;
-  }
-  .outlet-hero h1 {
-    font-size: 28px;
-  }
-
-  /* Cart page */
-  .cart-page {
-    padding: 24px 16px 140px;
-  }
-  .cart-page h1 {
-    font-size: 24px;
-  }
-  .cart-item-row {
-    grid-template-columns: 64px 1fr auto;
-    grid-template-areas:
-      'thumb name subtotal'
-      'thumb qty remove';
-    row-gap: 8px;
-  }
-  .cart-item-row .thumb {
-    grid-area: thumb;
-    width: 64px;
-    height: 64px;
-  }
-  .cart-item-row .name-block {
-    grid-area: name;
-  }
-  .cart-item-row .qty-controls {
-    grid-area: qty;
-  }
-  .cart-item-row .subtotal {
-    grid-area: subtotal;
-    min-width: 0;
-  }
-  .cart-item-row .remove-btn {
-    grid-area: remove;
-  }
-  .cart-summary-block .btn-primary {
-    width: 100%;
-  }
-
-  /* Checkout */
-  .checkout-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-  .checkout-summary {
-    position: static;
-    order: -1;
-  }
-
-  /* Confirmation */
-  .confirmation {
-    padding: 32px 16px 120px;
-  }
-  .confirmation h1 {
-    font-size: 28px;
-  }
-  .confirmation .confirmation-ctas .btn {
-    width: 100%;
-  }
-
-  /* Mobile-only nav bars */
-  .bottom-nav {
-    display: flex;
-  }
-  .mobile-cart-bar {
-    display: flex;
-  }
-}
 
 /* ===== Site Footer ===== */
 .site-footer,
@@ -1198,18 +1060,4 @@
   font-size: 13px;
 }
 
-@media (max-width: 768px) {
-  .site-footer,
-  .site-footer.container {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "brand"
-      "contact"
-      "copy";
-    text-align: center;
-    padding: 32px 20px 24px;
-  }
-  .site-footer .footer-contact {
-    text-align: center;
-  }
-}
+/* Footer mobile override moved to customer-mobile.css */
