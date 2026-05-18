@@ -126,6 +126,18 @@
 }
 
 /* ===== Section Pill ===== */
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.section-head .section-pill {
+  margin-bottom: 0;
+}
+
 .section-pill {
   display: inline-block;
   background: var(--color-accent);
