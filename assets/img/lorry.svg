@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 64" width="96" height="64" role="img" aria-label="Zack Pizza lorry">
+  <rect x="6" y="22" width="56" height="28" rx="4" fill="#E63946" stroke="#C1121F" stroke-width="1.5"/>
+  <rect x="62" y="32" width="24" height="18" rx="3" fill="#FFD60A" stroke="#C1121F" stroke-width="1.5"/>
+  <rect x="66" y="36" width="14" height="8" rx="2" fill="#FFFBF5"/>
+  <rect x="14" y="28" width="40" height="14" rx="2" fill="#FFFBF5" stroke="#C1121F" stroke-width="1"/>
+  <text x="34" y="40" font-family="Inter, system-ui, sans-serif" font-size="9" font-weight="800" fill="#E63946" text-anchor="middle">ZACK</text>
+  <circle cx="20" cy="54" r="6" fill="#1D1D1F"/>
+  <circle cx="20" cy="54" r="2.5" fill="#6B7280"/>
+  <circle cx="72" cy="54" r="6" fill="#1D1D1F"/>
+  <circle cx="72" cy="54" r="2.5" fill="#6B7280"/>
+  <path d="M14 22 L20 14 L46 14 L52 22 Z" fill="#C1121F" stroke="#C1121F" stroke-width="1"/>
+  <text x="33" y="20" font-family="Inter, system-ui, sans-serif" font-size="6" font-weight="700" fill="#FFFBF5" text-anchor="middle">PIZZA</text>
+</svg>

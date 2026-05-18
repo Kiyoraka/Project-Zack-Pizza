@@ -463,3 +463,24 @@ p {
     padding-bottom: 80px;
   }
 }
+
+/* ===== Focus Visible (Phase 7 Polish) ===== */
+*:focus {
+  outline: none;
+}
+button:focus-visible,
+.btn:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+.payment-option:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+input.input:focus-visible {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-soft);
+}
