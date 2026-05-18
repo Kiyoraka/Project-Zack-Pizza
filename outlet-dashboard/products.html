@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Products · Outlet Dashboard · Zack Pizza</title>
+  <meta name="theme-color" content="#E63946">
+  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/dashboard.css">
+</head>
+<body>
+  <div class="dash-shell">
+    <aside class="dash-sidebar">
+      <div class="dash-brand">
+        <p class="brand">🍕 ZACK PIZZA</p>
+        <p class="text-muted uppercase-micro">Outlet</p>
+      </div>
+      <nav class="dash-nav">
+        <a class="dash-nav-item" href="orders.html">
+          <span class="dash-nav-icon">📋</span>
+          <span>Orders</span>
+        </a>
+        <a class="dash-nav-item active" href="products.html">
+          <span class="dash-nav-icon">🍕</span>
+          <span>Products</span>
+        </a>
+        <a class="dash-nav-item" href="settings.html">
+          <span class="dash-nav-icon">⚙️</span>
+          <span>Settings</span>
+        </a>
+      </nav>
+      <button id="btn-logout" class="btn btn-ghost btn-sm" type="button" style="margin-top:auto;">
+        ← Logout
+      </button>
+    </aside>
+
+    <header class="mobile-dash-header">
+      <button class="hamburger" type="button" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+      <span class="mobile-dash-title">Products</span>
+      <button id="btn-logout-mobile" class="btn btn-ghost btn-sm" type="button">Logout</button>
+    </header>
+
+    <main class="dash-main">
+      <header class="dash-header">
+        <div>
+          <h1>Product Availability</h1>
+          <p id="outlet-page-subtitle" class="text-muted">Toggle items off when you run out of stock today.</p>
+        </div>
+      </header>
+
+      <section id="products-by-category" class="products-by-category">
+        <p class="text-muted">Loading products...</p>
+      </section>
+    </main>
+  </div>
+
+  <nav class="bottom-nav bottom-nav-outlet">
+    <a class="nav-tab" href="orders.html"><span class="nav-icon" style="font-size:22px">📋</span><span class="nav-label" style="font-size:11px">Orders</span></a>
+    <a class="nav-tab active" href="products.html"><span class="nav-icon" style="font-size:22px">🍕</span><span class="nav-label" style="font-size:11px">Products</span></a>
+    <a class="nav-tab" href="settings.html"><span class="nav-icon" style="font-size:22px">⚙️</span><span class="nav-label" style="font-size:11px">Settings</span></a>
+  </nav>
+
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/outlet-dashboard.js"></script>
+</body>
+</html>
