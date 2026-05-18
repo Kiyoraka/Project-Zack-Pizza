@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Settings · Admin · Zack Pizza</title>
+  <meta name="theme-color" content="#E63946">
+  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/dashboard.css">
+</head>
+<body>
+  <div class="dash-shell">
+    <aside class="dash-sidebar">
+      <div class="dash-brand">
+        <p class="brand">🍕 ZACK PIZZA</p>
+        <p class="text-muted uppercase-micro">Admin</p>
+      </div>
+      <nav class="dash-nav">
+        <a class="dash-nav-item" href="analytics.html"><span class="dash-nav-icon">📊</span><span>Analytics</span></a>
+        <a class="dash-nav-item" href="outlets.html"><span class="dash-nav-icon">🚚</span><span>Outlets</span></a>
+        <a class="dash-nav-item" href="products.html"><span class="dash-nav-icon">🍕</span><span>Products</span></a>
+        <a class="dash-nav-item active" href="settings.html"><span class="dash-nav-icon">⚙️</span><span>Settings</span></a>
+      </nav>
+      <button id="btn-logout" class="btn btn-ghost btn-sm" type="button" style="margin-top:auto;">← Logout</button>
+    </aside>
+
+    <header class="mobile-dash-header">
+      <button class="hamburger" type="button" aria-label="Open menu"><span></span><span></span><span></span></button>
+      <span class="mobile-dash-title">Settings</span>
+      <button id="btn-logout-mobile" class="btn btn-ghost btn-sm" type="button">Logout</button>
+    </header>
+
+    <main class="dash-main">
+      <header class="dash-header">
+        <div>
+          <h1>Brand & Payment Settings</h1>
+          <p class="text-muted">All changes apply across customer-facing surfaces.</p>
+        </div>
+      </header>
+
+      <form id="admin-settings-form" novalidate>
+        <section class="card form-section">
+          <h3>Brand</h3>
+          <p class="text-muted" style="margin-top:-8px">Visible on landing, footer, confirmation page.</p>
+          <div class="input-group">
+            <label class="input-label" for="brand-name">Brand name</label>
+            <input class="input" id="brand-name" name="brand-name" type="text" required>
+          </div>
+          <div class="input-group">
+            <label class="input-label" for="brand-tagline">Tagline</label>
+            <input class="input" id="brand-tagline" name="brand-tagline" type="text">
+          </div>
+          <div class="input-group">
+            <label class="input-label" for="brand-logo">Logo file</label>
+            <input class="input" id="brand-logo" name="brand-logo" type="file" accept="image/*">
+          </div>
+          <div class="form-row" style="display:flex; gap:12px;">
+            <div class="input-group" style="flex:1">
+              <label class="input-label" for="brand-phone">Phone</label>
+              <input class="input" id="brand-phone" name="brand-phone" type="tel">
+            </div>
+            <div class="input-group" style="flex:1">
+              <label class="input-label" for="brand-email">Email</label>
+              <input class="input" id="brand-email" name="brand-email" type="email">
+            </div>
+          </div>
+          <div class="input-group">
+            <label class="input-label" for="brand-instagram">Instagram handle</label>
+            <input class="input" id="brand-instagram" name="brand-instagram" type="text" placeholder="@zackpizza">
+          </div>
+        </section>
+
+        <section class="card form-section">
+          <h3>Payment Gateways</h3>
+          <p class="text-muted" style="margin-top:-8px">Toggle and configure each provider.</p>
+
+          <div class="gateway-row">
+            <label class="payment-option" data-gateway="stripe">
+              <input type="checkbox" id="gw-stripe-enabled" checked>
+              <span class="payment-logo">💳</span>
+              <span class="payment-label">Stripe</span>
+              <span class="badge badge-soft-red" style="margin-left:auto">TEST</span>
+            </label>
+            <div class="gateway-fields">
+              <div class="input-group"><label class="input-label" for="stripe-pub">Publishable key</label><input class="input" id="stripe-pub" placeholder="pk_test_..." type="text"></div>
+              <div class="input-group"><label class="input-label" for="stripe-sec">Secret key</label><input class="input" id="stripe-sec" placeholder="sk_test_..." type="password"></div>
+              <div class="form-row" style="display:flex; gap:12px;">
+                <label class="payment-option" style="flex:1"><input type="radio" name="stripe-mode" value="test" checked><span class="payment-label">Test</span></label>
+                <label class="payment-option" style="flex:1"><input type="radio" name="stripe-mode" value="live"><span class="payment-label">Live</span></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="gateway-row">
+            <label class="payment-option" data-gateway="billplz">
+              <input type="checkbox" id="gw-billplz-enabled" checked>
+              <span class="payment-logo">🏦</span>
+              <span class="payment-label">Billplz (Malaysia)</span>
+              <span class="badge badge-soft-red" style="margin-left:auto">TEST</span>
+            </label>
+            <div class="gateway-fields">
+              <div class="input-group"><label class="input-label" for="billplz-api">API key</label><input class="input" id="billplz-api" placeholder="..." type="text"></div>
+              <div class="input-group"><label class="input-label" for="billplz-coll">Collection ID</label><input class="input" id="billplz-coll" placeholder="..." type="text"></div>
+            </div>
+          </div>
+
+          <div class="gateway-row">
+            <label class="payment-option" data-gateway="fpx">
+              <input type="checkbox" id="gw-fpx-enabled" checked>
+              <span class="payment-logo">🏧</span>
+              <span class="payment-label">FPX Online Banking</span>
+              <span class="badge badge-soft-red" style="margin-left:auto">TEST</span>
+            </label>
+            <div class="gateway-fields">
+              <div class="input-group"><label class="input-label" for="fpx-merchant">Merchant ID</label><input class="input" id="fpx-merchant" placeholder="..." type="text"></div>
+            </div>
+          </div>
+
+          <label class="payment-option" data-gateway="cash">
+            <input type="checkbox" id="gw-cash-enabled">
+            <span class="payment-logo">💵</span>
+            <span class="payment-label">Cash on pickup</span>
+          </label>
+        </section>
+
+        <p id="admin-settings-saved" class="text-muted" style="display:none; color: var(--color-success);">✓ All changes saved</p>
+
+        <button id="btn-save-admin-settings" type="submit" class="btn btn-primary btn-lg" style="width:100%; justify-content:center;">Save All Changes</button>
+      </form>
+    </main>
+  </div>
+
+  <nav class="bottom-nav bottom-nav-admin">
+    <a class="nav-tab" href="analytics.html"><span class="nav-icon" style="font-size:22px">📊</span><span class="nav-label" style="font-size:11px">Analytics</span></a>
+    <a class="nav-tab" href="outlets.html"><span class="nav-icon" style="font-size:22px">🚚</span><span class="nav-label" style="font-size:11px">Outlets</span></a>
+    <a class="nav-tab" href="products.html"><span class="nav-icon" style="font-size:22px">🍕</span><span class="nav-label" style="font-size:11px">Products</span></a>
+    <a class="nav-tab active" href="settings.html"><span class="nav-icon" style="font-size:22px">⚙️</span><span class="nav-label" style="font-size:11px">Settings</span></a>
+  </nav>
+
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/admin-dashboard.js"></script>
+</body>
+</html>
