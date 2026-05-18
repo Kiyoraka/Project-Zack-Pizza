@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Outlets · Admin · Zack Pizza</title>
+  <meta name="theme-color" content="#E63946">
+  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/dashboard.css">
+</head>
+<body>
+  <div class="dash-shell">
+    <aside class="dash-sidebar">
+      <div class="dash-brand">
+        <p class="brand">🍕 ZACK PIZZA</p>
+        <p class="text-muted uppercase-micro">Admin</p>
+      </div>
+      <nav class="dash-nav">
+        <a class="dash-nav-item" href="analytics.html"><span class="dash-nav-icon">📊</span><span>Analytics</span></a>
+        <a class="dash-nav-item active" href="outlets.html"><span class="dash-nav-icon">🚚</span><span>Outlets</span></a>
+        <a class="dash-nav-item" href="products.html"><span class="dash-nav-icon">🍕</span><span>Products</span></a>
+        <a class="dash-nav-item" href="settings.html"><span class="dash-nav-icon">⚙️</span><span>Settings</span></a>
+      </nav>
+      <button id="btn-logout" class="btn btn-ghost btn-sm" type="button" style="margin-top:auto;">← Logout</button>
+    </aside>
+
+    <header class="mobile-dash-header">
+      <button class="hamburger" type="button" aria-label="Open menu"><span></span><span></span><span></span></button>
+      <span class="mobile-dash-title">Outlets</span>
+      <button id="btn-logout-mobile" class="btn btn-ghost btn-sm" type="button">Logout</button>
+    </header>
+
+    <main class="dash-main">
+      <header class="dash-header">
+        <div>
+          <h1>Outlets</h1>
+          <p class="text-muted">Manage all 5 lorries.</p>
+        </div>
+        <button id="btn-add-outlet" class="btn btn-primary btn-sm" type="button">+ Add Lorry</button>
+      </header>
+
+      <section id="outlets-list" class="entity-list">
+        <p class="text-muted">Loading lorries...</p>
+      </section>
+    </main>
+  </div>
+
+  <div id="outlet-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="outlet-modal-title">
+    <div class="modal-content">
+      <header class="modal-header">
+        <h2 id="outlet-modal-title" class="modal-title">Edit Lorry</h2>
+        <button id="outlet-modal-close" class="modal-close" type="button" aria-label="Close">×</button>
+      </header>
+
+      <form id="outlet-form" novalidate>
+        <input type="hidden" id="outlet-form-id">
+        <div class="input-group">
+          <label class="input-label" for="outlet-name">Name</label>
+          <input class="input" id="outlet-name" name="name" type="text" required>
+        </div>
+        <div class="input-group">
+          <label class="input-label" for="outlet-crew">Crew (comma-separated)</label>
+          <input class="input" id="outlet-crew" name="crew" type="text" placeholder="Ali, Siti">
+        </div>
+        <div class="input-group">
+          <label class="input-label">Status</label>
+          <select class="input" id="outlet-status">
+            <option value="active">Active</option>
+            <option value="closed-today">Closed today</option>
+          </select>
+        </div>
+
+        <div class="form-section">
+          <h3 style="font-size:16px">7-Day Schedule</h3>
+          <div id="outlet-schedule" class="schedule-editor"></div>
+        </div>
+
+        <button id="btn-save-outlet" type="submit" class="btn btn-primary btn-lg" style="width:100%; justify-content:center;">Save Changes</button>
+      </form>
+    </div>
+  </div>
+
+  <nav class="bottom-nav bottom-nav-admin">
+    <a class="nav-tab" href="analytics.html"><span class="nav-icon" style="font-size:22px">📊</span><span class="nav-label" style="font-size:11px">Analytics</span></a>
+    <a class="nav-tab active" href="outlets.html"><span class="nav-icon" style="font-size:22px">🚚</span><span class="nav-label" style="font-size:11px">Outlets</span></a>
+    <a class="nav-tab" href="products.html"><span class="nav-icon" style="font-size:22px">🍕</span><span class="nav-label" style="font-size:11px">Products</span></a>
+    <a class="nav-tab" href="settings.html"><span class="nav-icon" style="font-size:22px">⚙️</span><span class="nav-label" style="font-size:11px">Settings</span></a>
+  </nav>
+
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/admin-dashboard.js"></script>
+</body>
+</html>
