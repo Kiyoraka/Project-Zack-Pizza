@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Analytics · Admin · Zack Pizza</title>
+  <meta name="theme-color" content="#E63946">
+  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/dashboard.css">
+</head>
+<body>
+  <div class="dash-shell">
+    <aside class="dash-sidebar">
+      <div class="dash-brand">
+        <p class="brand">🍕 ZACK PIZZA</p>
+        <p class="text-muted uppercase-micro">Admin</p>
+      </div>
+      <nav class="dash-nav">
+        <a class="dash-nav-item active" href="analytics.html"><span class="dash-nav-icon">📊</span><span>Analytics</span></a>
+        <a class="dash-nav-item" href="outlets.html"><span class="dash-nav-icon">🚚</span><span>Outlets</span></a>
+        <a class="dash-nav-item" href="products.html"><span class="dash-nav-icon">🍕</span><span>Products</span></a>
+        <a class="dash-nav-item" href="settings.html"><span class="dash-nav-icon">⚙️</span><span>Settings</span></a>
+      </nav>
+      <button id="btn-logout" class="btn btn-ghost btn-sm" type="button" style="margin-top:auto;">← Logout</button>
+    </aside>
+
+    <header class="mobile-dash-header">
+      <button class="hamburger" type="button" aria-label="Open menu"><span></span><span></span><span></span></button>
+      <span class="mobile-dash-title">Analytics</span>
+      <button id="btn-logout-mobile" class="btn btn-ghost btn-sm" type="button">Logout</button>
+    </header>
+
+    <main class="dash-main">
+      <header class="dash-header">
+        <div>
+          <h1>Analytics</h1>
+          <p class="text-muted">7-day performance across all lorries.</p>
+        </div>
+      </header>
+
+      <section class="kpi-row">
+        <div class="kpi-card">
+          <p class="text-muted uppercase-micro">Today's Revenue</p>
+          <p id="kpi-revenue-today" class="kpi-value">RM 0</p>
+          <p id="kpi-revenue-delta" class="kpi-delta">—</p>
+        </div>
+        <div class="kpi-card">
+          <p class="text-muted uppercase-micro">Orders Today</p>
+          <p id="kpi-orders-today" class="kpi-value">0</p>
+          <p id="kpi-orders-delta" class="kpi-delta">—</p>
+        </div>
+        <div class="kpi-card">
+          <p class="text-muted uppercase-micro">Active Lorries</p>
+          <p id="kpi-active-lorries" class="kpi-value">0 / 5</p>
+          <p id="kpi-lorries-meta" class="kpi-delta text-muted">—</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <header style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+          <h3 style="margin:0">Revenue · Last 7 days</h3>
+          <span class="text-muted uppercase-micro">All lorries combined</span>
+        </header>
+        <div id="bar-chart" class="bar-chart"></div>
+      </section>
+
+      <section class="card">
+        <header style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+          <h3 style="margin:0">Per-Outlet Performance · Last 7 days</h3>
+        </header>
+        <table class="dash-table outlet-perf-table">
+          <thead>
+            <tr>
+              <th>Lorry</th>
+              <th>Revenue</th>
+              <th>Orders</th>
+              <th>Top Item</th>
+              <th>Trend</th>
+            </tr>
+          </thead>
+          <tbody id="perf-table-body">
+            <tr><td colspan="5" class="text-muted">Loading...</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <nav class="bottom-nav bottom-nav-admin">
+    <a class="nav-tab active" href="analytics.html"><span class="nav-icon" style="font-size:22px">📊</span><span class="nav-label" style="font-size:11px">Analytics</span></a>
+    <a class="nav-tab" href="outlets.html"><span class="nav-icon" style="font-size:22px">🚚</span><span class="nav-label" style="font-size:11px">Outlets</span></a>
+    <a class="nav-tab" href="products.html"><span class="nav-icon" style="font-size:22px">🍕</span><span class="nav-label" style="font-size:11px">Products</span></a>
+    <a class="nav-tab" href="settings.html"><span class="nav-icon" style="font-size:22px">⚙️</span><span class="nav-label" style="font-size:11px">Settings</span></a>
+  </nav>
+
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/admin-dashboard.js"></script>
+</body>
+</html>
