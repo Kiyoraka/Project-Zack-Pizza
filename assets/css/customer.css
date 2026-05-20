@@ -727,8 +727,7 @@
   font-weight: 500;
 }
 
-.outlet-hero .maps-link,
-.outlet-hero #outlet-maps {
+.outlet-hero .maps-link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -738,8 +737,22 @@
   text-decoration: underline;
 }
 
-.outlet-hero #outlet-maps {
+/* Override btn-secondary on the colorful hero so text stays visible -
+   ghost button matching the crew-chip glass style */
+.outlet-hero #outlet-maps,
+.outlet-hero .btn-secondary {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: #FFFFFF;
+  margin-top: 20px;
   text-decoration: none;
+}
+
+.outlet-hero #outlet-maps:hover,
+.outlet-hero .btn-secondary:hover {
+  background: #FFFFFF;
+  color: var(--color-primary);
+  border-color: #FFFFFF;
 }
 
 /* ===== Outlet Menu ===== */
