@@ -12,9 +12,7 @@
   .menu-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  .outlet-menu-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  /* .outlet-menu-grid is now flex-column (categories stack); no col-count override needed */
 }
 
 /* ===== Mobile (max 768) ===== */
@@ -132,8 +130,7 @@
     padding: 8px 12px;
   }
 
-  .menu-grid,
-  .outlet-menu-grid {
+  .menu-grid {
     grid-template-columns: 1fr;
   }
 

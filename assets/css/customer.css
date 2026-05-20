@@ -654,12 +654,18 @@
 .outlet-hero .outlet-meta {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 6px;
   font-size: 15px;
   opacity: 0.95;
 }
 
-.outlet-hero .crew-chips {
+.outlet-hero .outlet-meta .badge {
+  align-self: flex-start;
+}
+
+.outlet-hero .crew-chips,
+.outlet-hero .outlet-crew {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -725,13 +731,14 @@
   border-bottom-color: var(--color-primary);
 }
 
+/* outlet-menu-grid is the OUTER wrapper that contains <section class="menu-category"> blocks.
+   Each section has its OWN inner .menu-grid for the products. So the outer wrapper must NOT
+   be a multi-column grid -- categories should flow vertically with spacing between them. */
 .outlet-menu-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 }
-
-/* .outlet-menu-grid tablet override moved to customer-mobile.css */
 
 .btn-add {
   background: var(--color-primary);
