@@ -142,6 +142,201 @@
     padding: 28px 24px;
   }
 
+  /* ===== Admin Per-Outlet Performance: table -> cards ===== */
+  .outlet-perf-table thead {
+    display: none;
+  }
+
+  .outlet-perf-table,
+  .outlet-perf-table tbody,
+  .outlet-perf-table tr,
+  .outlet-perf-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .outlet-perf-table tr {
+    background: var(--color-bg-soft);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    box-shadow: var(--shadow-card);
+  }
+
+  .outlet-perf-table td {
+    padding: 8px 0;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+  }
+
+  /* First cell = lorry name header */
+  .outlet-perf-table td:first-child {
+    display: block;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-text);
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: 8px;
+    padding-bottom: 12px;
+  }
+
+  /* Other cells get column-name labels via ::before */
+  .outlet-perf-table td:not(:first-child)::before {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+  }
+
+  .outlet-perf-table td:nth-child(2)::before { content: 'Revenue'; }
+  .outlet-perf-table td:nth-child(3)::before { content: 'Orders'; }
+  .outlet-perf-table td:nth-child(4)::before { content: 'Top Item'; }
+  .outlet-perf-table td:nth-child(5)::before { content: 'Trend'; }
+
+  /* ===== Admin Outlets list: entity-row -> card with thumb+meta top, footer bottom ===== */
+  #outlets-list .entity-row,
+  .entity-list .entity-row {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    grid-template-rows: auto auto auto;
+    column-gap: 12px;
+    row-gap: 8px;
+    align-items: start;
+  }
+
+  #outlets-list .entity-row > .entity-thumb,
+  .entity-list .entity-row > .entity-thumb {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  #outlets-list .entity-row > .entity-meta,
+  .entity-list .entity-row > .entity-meta {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  #outlets-list .entity-row > .badge,
+  .entity-list .entity-row > .badge {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-self: start;
+    margin-top: 8px;
+    padding: 6px 12px;
+    border-top: 1px solid var(--color-border);
+    border-radius: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  #outlets-list .entity-row > .entity-actions,
+  .entity-list .entity-row > .entity-actions {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    justify-self: stretch;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--color-border);
+  }
+
+  /* ===== Admin Products table: rows -> cards ===== */
+  #products-table-body {
+    display: block;
+  }
+
+  #products-table-body tr {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    grid-template-rows: auto auto auto auto auto;
+    column-gap: 12px;
+    row-gap: 8px;
+    align-items: start;
+    background: var(--color-bg-soft);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    box-shadow: var(--shadow-card);
+  }
+
+  /* Hide the products table thead on mobile */
+  .dash-table-products thead,
+  .dash-table:has(#products-table-body) thead {
+    display: none;
+  }
+
+  #products-table-body td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 4px 0;
+    border: none;
+    font-size: 14px;
+  }
+
+  /* td 1 = image cell -> top-left thumb */
+  #products-table-body td:nth-child(1) {
+    grid-column: 1;
+    grid-row: 1;
+    padding: 0;
+  }
+
+  /* td 2 = name+description -> top-right */
+  #products-table-body td:nth-child(2) {
+    grid-column: 2;
+    grid-row: 1;
+    display: block;
+    padding: 0;
+  }
+
+  /* td 3-5 (Category / Price / Status) span full width as key-value rows */
+  #products-table-body td:nth-child(3),
+  #products-table-body td:nth-child(4),
+  #products-table-body td:nth-child(5) {
+    grid-column: 1 / -1;
+    border-top: 1px solid var(--color-border);
+    padding-top: 8px;
+    margin-top: 0;
+  }
+
+  #products-table-body td:nth-child(3) { grid-row: 2; }
+  #products-table-body td:nth-child(4) { grid-row: 3; border-top: none; padding-top: 4px; }
+  #products-table-body td:nth-child(5) { grid-row: 4; border-top: none; padding-top: 4px; }
+
+  #products-table-body td:nth-child(3)::before { content: 'Category'; }
+  #products-table-body td:nth-child(4)::before { content: 'Price'; }
+  #products-table-body td:nth-child(5)::before { content: 'Status'; }
+
+  #products-table-body td:nth-child(3)::before,
+  #products-table-body td:nth-child(4)::before,
+  #products-table-body td:nth-child(5)::before {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+  }
+
+  /* td 6 = actions -> footer row with divider */
+  #products-table-body td:nth-child(6) {
+    grid-column: 1 / -1;
+    grid-row: 5;
+    justify-content: flex-end;
+    gap: 8px;
+    padding-top: 12px;
+    border-top: 1px solid var(--color-border);
+    margin-top: 4px;
+  }
+
   /* ===== Mobile pill tabs (status + category tabs) =====
      On mobile, the underline-tab pattern overflows horizontally and is hard to scan.
      Switch to a 2-column pill grid so all tabs are visible at once. */
