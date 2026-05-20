@@ -171,6 +171,11 @@
     margin-left: 4px;
   }
 
+  /* History (5th tab) always spans the full row width when it lands alone */
+  .status-tab[data-status="history"] {
+    grid-column: 1 / -1;
+  }
+
   /* ===== Mobile product availability card (vertical layout) =====
      Desktop uses a 3-column row (image | info | controls). Mobile reflows
      into a vertical card: image+name+description on top, then a full-width
