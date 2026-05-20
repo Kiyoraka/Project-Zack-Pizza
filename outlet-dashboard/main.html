@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Orders · Outlet Dashboard · Zack Pizza</title>
+  <title>Main · Outlet Dashboard · Zack Pizza</title>
   <meta name="theme-color" content="#E63946">
   <link rel="stylesheet" href="../assets/css/global.css">
   <link rel="stylesheet" href="../assets/css/dashboard.css">
@@ -18,11 +18,11 @@
         <p class="text-muted uppercase-micro">Outlet</p>
       </div>
       <nav class="dash-nav">
-        <a class="dash-nav-item" href="main.html">
+        <a class="dash-nav-item active" href="main.html">
           <span class="dash-nav-icon">🏠</span>
           <span>Main</span>
         </a>
-        <a class="dash-nav-item active" href="orders.html">
+        <a class="dash-nav-item" href="orders.html">
           <span class="dash-nav-icon">📋</span>
           <span>Orders</span>
         </a>
@@ -44,14 +44,14 @@
       <button class="hamburger" type="button" aria-label="Open menu">
         <span></span><span></span><span></span>
       </button>
-      <span class="mobile-dash-title">Orders</span>
+      <span class="mobile-dash-title">Main</span>
       <button id="btn-logout-mobile" class="btn btn-ghost btn-sm" type="button">Logout</button>
     </header>
 
     <main class="dash-main">
       <header class="dash-header">
         <div>
-          <h1 id="outlet-page-name">Orders</h1>
+          <h1 id="outlet-page-name">Today at your lorry</h1>
           <p id="outlet-page-subtitle" class="text-muted">—</p>
         </div>
         <div class="dash-header-actions">
@@ -59,23 +59,54 @@
         </div>
       </header>
 
-      <nav id="status-tabs" class="status-tabs">
-        <button class="status-tab active" data-status="pending" type="button">⏳ Pending <span class="status-count">0</span></button>
-        <button class="status-tab" data-status="preparing" type="button">👨‍🍳 Preparing <span class="status-count">0</span></button>
-        <button class="status-tab" data-status="ready" type="button">✅ Ready <span class="status-count">0</span></button>
-        <button class="status-tab" data-status="picked-up" type="button">📦 Picked Up <span class="status-count">0</span></button>
-        <button class="status-tab" data-status="history" type="button">📜 History <span class="status-count">0</span></button>
-      </nav>
+      <section class="kpi-grid" id="main-kpi-grid">
+        <div class="kpi-tile">
+          <span class="kpi-label">Pending</span>
+          <span class="kpi-value" id="kpi-pending">0</span>
+          <span class="kpi-hint">orders waiting</span>
+        </div>
+        <div class="kpi-tile">
+          <span class="kpi-label">In progress</span>
+          <span class="kpi-value" id="kpi-inflight">0</span>
+          <span class="kpi-hint">preparing + ready</span>
+        </div>
+        <div class="kpi-tile">
+          <span class="kpi-label">Picked up today</span>
+          <span class="kpi-value" id="kpi-picked-up">0</span>
+          <span class="kpi-hint">delivered orders</span>
+        </div>
+        <div class="kpi-tile">
+          <span class="kpi-label">Revenue today</span>
+          <span class="kpi-value" id="kpi-revenue">RM 0.00</span>
+          <span class="kpi-hint">paid + picked-up</span>
+        </div>
+      </section>
 
-      <section id="orders-list" class="orders-list">
-        <p class="text-muted">Loading orders...</p>
+      <section class="main-quick-actions">
+        <a class="quick-action-card" href="orders.html">
+          <span class="quick-action-icon">📋</span>
+          <span class="quick-action-title">View all orders</span>
+          <span class="quick-action-hint" id="quick-action-orders-hint">—</span>
+        </a>
+        <a class="quick-action-card" href="products.html">
+          <span class="quick-action-icon">🍕</span>
+          <span class="quick-action-title">Manage stock</span>
+          <span class="quick-action-hint" id="quick-action-products-hint">—</span>
+        </a>
+      </section>
+
+      <section class="main-recent">
+        <h3 class="main-recent-title">Recent activity</h3>
+        <div id="main-recent-list" class="entity-rows">
+          <p class="text-muted">Loading recent orders...</p>
+        </div>
       </section>
     </main>
   </div>
 
   <nav class="bottom-nav bottom-nav-outlet">
-    <a class="nav-tab" href="main.html"><span class="nav-icon" style="font-size:22px">🏠</span><span class="nav-label" style="font-size:11px">Main</span></a>
-    <a class="nav-tab active" href="orders.html"><span class="nav-icon" style="font-size:22px">📋</span><span class="nav-label" style="font-size:11px">Orders</span></a>
+    <a class="nav-tab active" href="main.html"><span class="nav-icon" style="font-size:22px">🏠</span><span class="nav-label" style="font-size:11px">Main</span></a>
+    <a class="nav-tab" href="orders.html"><span class="nav-icon" style="font-size:22px">📋</span><span class="nav-label" style="font-size:11px">Orders</span></a>
     <a class="nav-tab" href="products.html"><span class="nav-icon" style="font-size:22px">🍕</span><span class="nav-label" style="font-size:11px">Products</span></a>
     <a class="nav-tab" href="settings.html"><span class="nav-icon" style="font-size:22px">⚙️</span><span class="nav-label" style="font-size:11px">Settings</span></a>
   </nav>

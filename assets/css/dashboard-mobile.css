@@ -6,8 +6,12 @@
 
 /* ===== Tablet (max 1024) ===== */
 @media (max-width: 1024px) {
-  .kpi-row {
+  .kpi-row,
+  .kpi-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .main-quick-actions {
+    grid-template-columns: 1fr;
   }
   .dash-main {
     padding: 24px 24px;
@@ -124,6 +128,12 @@
 @media (max-width: 480px) {
   .order-card {
     padding: 16px;
+  }
+  .kpi-grid {
+    grid-template-columns: 1fr;
+  }
+  .kpi-value {
+    font-size: 28px;
   }
   .dash-table th,
   .dash-table td {

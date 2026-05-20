@@ -89,7 +89,7 @@
             if (!localStorage.getItem('zackpizza.currentOutletId')) {
               localStorage.setItem('zackpizza.currentOutletId', 'lorry-1');
             }
-            window.location.href = 'outlet-dashboard/orders.html';
+            window.location.href = 'outlet-dashboard/main.html';
           }
         } catch (err) {
           showError('Demo access failed: ' + (err && err.message ? err.message : 'storage unavailable'));

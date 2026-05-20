@@ -279,7 +279,7 @@
         return;
       }
       try { localStorage.setItem(KEY_OUTLET_ID, selected.value); } catch (err) {}
-      window.location.href = 'orders.html';
+      window.location.href = 'main.html';
     });
 
     // Click-to-fill demo credentials
@@ -462,6 +462,99 @@
     }
 
     renderOrdersTabsAndList(outlet);
+  }
+
+  // =====================================================================
+  // 2.5) MAIN OVERVIEW PAGE
+  // =====================================================================
+  function initMainPage() {
+    var kpiGrid = qs('#main-kpi-grid');
+    if (!kpiGrid) return;
+    var outlet = getCurrentOutlet();
+    if (!outlet) {
+      window.location.href = 'login.html';
+      return;
+    }
+    wireSubtitle(outlet);
+
+    function render() {
+      var all = getAllOrders().filter(function (o) { return o.outletId === outlet.id; });
+
+      var pendingCount = 0;
+      var inflightCount = 0;
+      var pickedUpTodayCount = 0;
+      var revenueToday = 0;
+
+      all.forEach(function (o) {
+        if (o.orderStatus === 'pending') pendingCount++;
+        else if (o.orderStatus === 'preparing' || o.orderStatus === 'ready') inflightCount++;
+        else if (o.orderStatus === 'picked-up' && isToday(getPickupTimestamp(o))) {
+          pickedUpTodayCount++;
+          if (o.paymentStatus === 'paid') revenueToday += Number(o.total) || 0;
+        }
+      });
+
+      var setText = function (id, val) {
+        var el = qs('#' + id);
+        if (el) el.textContent = val;
+      };
+      setText('kpi-pending', String(pendingCount));
+      setText('kpi-inflight', String(inflightCount));
+      setText('kpi-picked-up', String(pickedUpTodayCount));
+      setText('kpi-revenue', formatPrice(revenueToday));
+
+      var ordersHint = qs('#quick-action-orders-hint');
+      if (ordersHint) {
+        ordersHint.textContent = pendingCount === 0
+          ? 'No pending orders right now'
+          : pendingCount === 1 ? '1 order waiting' : pendingCount + ' orders waiting';
+      }
+
+      var products = (window.SAMPLE_DATA && SAMPLE_DATA.products) ? SAMPLE_DATA.products : [];
+      var outOfStock = (outlet.outOfStockToday || []).length;
+      var productsHint = qs('#quick-action-products-hint');
+      if (productsHint) {
+        productsHint.textContent = outOfStock === 0
+          ? products.length + ' products available'
+          : outOfStock + ' out of stock today';
+      }
+
+      // Recent activity: last 5 orders sorted newest first by createdAt
+      var recentEl = qs('#main-recent-list');
+      if (recentEl) {
+        var recent = all.slice().sort(function (a, b) {
+          var ta = new Date(a.createdAt).getTime() || 0;
+          var tb = new Date(b.createdAt).getTime() || 0;
+          return tb - ta;
+        }).slice(0, 5);
+
+        if (!recent.length) {
+          recentEl.innerHTML = '<p class="text-muted" style="padding:16px;">No orders yet.</p>';
+        } else {
+          recentEl.innerHTML = recent.map(function (o) {
+            var items = (o.items || []).length;
+            return [
+              '<a class="entity-row main-recent-row" href="orders.html">',
+                '<div class="entity-info" style="flex:1;min-width:0;">',
+                  '<p class="entity-name"><strong>' + escapeHtml(o.id) + '</strong> &middot; ',
+                  escapeHtml(o.customerName || 'Customer') + '</p>',
+                  '<p class="text-muted" style="font-size:13px;">' + items + ' item' + (items === 1 ? '' : 's') + ' &middot; ' + escapeHtml(relativeTime(o.createdAt)) + '</p>',
+                '</div>',
+                '<div class="entity-price" style="font-weight:600;">' + escapeHtml(formatPrice(o.total)) + '</div>',
+                '<span class="badge ' + statusBadgeClass(o.orderStatus) + '">' + escapeHtml(String(o.orderStatus || '').toUpperCase()) + '</span>',
+              '</a>'
+            ].join('');
+          }).join('');
+        }
+      }
+    }
+
+    var refresh = qs('#btn-refresh');
+    if (refresh) {
+      refresh.addEventListener('click', render);
+    }
+
+    render();
   }
 
   // =====================================================================
@@ -708,6 +801,7 @@
       return;
     }
 
+    initMainPage();
     initOrdersPage();
     initProductsPage();
     initSettingsPage();

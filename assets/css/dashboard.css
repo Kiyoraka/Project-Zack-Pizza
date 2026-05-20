@@ -946,6 +946,103 @@
   white-space: nowrap;
 }
 
+/* ===== Outlet Main page (KPI tiles + quick actions + recent activity) ===== */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.kpi-tile {
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 20px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.kpi-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+}
+
+.kpi-value {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--color-primary);
+  line-height: 1.1;
+}
+
+.kpi-hint {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.main-quick-actions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.quick-action-card {
+  background: var(--color-bg-soft);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.quick-action-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-card);
+}
+
+.quick-action-icon {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.quick-action-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.quick-action-hint {
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.main-recent-title {
+  margin: 0 0 16px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.main-recent-row {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.main-recent-row:hover {
+  border-color: var(--color-primary);
+}
+
 /* ===== Outlet product availability row (image + name + price/stock/available grid) ===== */
 .entity-rows {
   display: flex;
