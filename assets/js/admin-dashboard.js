@@ -217,17 +217,6 @@
       });
     }
 
-    // Auto-fill credentials if arrived via ?autofill=1 (from customer site demo button)
-    try {
-      var params = new URLSearchParams(window.location.search);
-      if (params.get('autofill') === '1') {
-        var emailEl = qs('#input-email');
-        var passwordEl = qs('#input-password');
-        if (emailEl) emailEl.value = 'admin@gmail.com';
-        if (passwordEl) passwordEl.value = 'admin123';
-      }
-    } catch (urlErr) { /* URLSearchParams unavailable - skip */ }
-
     return true;
   }
 

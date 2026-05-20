@@ -254,14 +254,6 @@
       });
     }
 
-    // Auto-fill credentials if arrived via ?autofill=1 (from customer site demo button)
-    try {
-      var params = new URLSearchParams(window.location.search);
-      if (params.get('autofill') === '1') {
-        if (emailInput) emailInput.value = 'outlet@gmail.com';
-        if (passwordInput) passwordInput.value = 'admin123';
-      }
-    } catch (urlErr) { /* URLSearchParams unavailable - skip */ }
   }
 
   // =====================================================================

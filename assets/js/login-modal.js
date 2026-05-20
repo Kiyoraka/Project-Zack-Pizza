@@ -73,6 +73,29 @@
         showError('Sign-in is demo-only for now. Backend auth coming soon.');
       });
     }
+
+    // Quick demo access - skip the dashboard login page entirely
+    var demoButtons = document.querySelectorAll('.login-demo-btn[data-demo-role]');
+    for (var i = 0; i < demoButtons.length; i++) {
+      demoButtons[i].addEventListener('click', function (e) {
+        e.preventDefault();
+        var role = this.getAttribute('data-demo-role');
+        try {
+          if (role === 'admin') {
+            localStorage.setItem('zackpizza.adminAuth', 'true');
+            window.location.href = 'admin-dashboard/analytics.html';
+          } else if (role === 'outlet') {
+            // Default to lorry-1 if none picked yet (demo convenience)
+            if (!localStorage.getItem('zackpizza.currentOutletId')) {
+              localStorage.setItem('zackpizza.currentOutletId', 'lorry-1');
+            }
+            window.location.href = 'outlet-dashboard/orders.html';
+          }
+        } catch (err) {
+          showError('Demo access failed: ' + (err && err.message ? err.message : 'storage unavailable'));
+        }
+      });
+    }
   }
 
   if (document.readyState === 'loading') {
