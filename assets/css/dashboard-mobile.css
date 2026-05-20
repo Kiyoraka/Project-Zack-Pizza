@@ -122,6 +122,114 @@
   .login-card {
     padding: 28px 24px;
   }
+
+  /* ===== Mobile pill tabs (status + category tabs) =====
+     On mobile, the underline-tab pattern overflows horizontally and is hard to scan.
+     Switch to a 2-column pill grid so all tabs are visible at once. */
+  .status-tabs,
+  .category-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    border-bottom: none;
+    margin-bottom: 20px;
+    overflow-x: visible;
+  }
+
+  .status-tab,
+  .category-tab {
+    padding: 12px 14px;
+    background: var(--color-primary-soft);
+    border: 1px solid var(--color-primary-soft);
+    border-radius: var(--radius-pill);
+    color: var(--color-primary);
+    text-align: center;
+    border-bottom: 1px solid var(--color-primary-soft);
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .status-tab:hover,
+  .category-tab:hover {
+    background: #FFFFFF;
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  .status-tab.active,
+  .category-tab.active {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #FFFFFF;
+  }
+
+  .status-tab.active .status-count {
+    background: #FFFFFF;
+    color: var(--color-primary);
+    padding: 1px 8px;
+    border-radius: var(--radius-pill);
+    font-weight: 700;
+    margin-left: 4px;
+  }
+
+  /* ===== Mobile product availability card (vertical layout) =====
+     Desktop uses a 3-column row (image | info | controls). Mobile reflows
+     into a vertical card: image+name+description on top, then a full-width
+     Price/Stock/Available row at the bottom -- matches order-card rhythm. */
+  .product-availability-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .product-availability-row .entity-thumb.product-thumb {
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+  }
+
+  /* Wrap image + info in their own flex row at the top of the card */
+  .product-availability-row > .entity-thumb,
+  .product-availability-row > .entity-info {
+    display: inline-block;
+  }
+
+  .product-availability-row {
+    display: grid;
+    grid-template-areas:
+      "thumb info"
+      "controls controls";
+    grid-template-columns: 64px 1fr;
+    column-gap: 12px;
+    row-gap: 12px;
+  }
+
+  .product-availability-row .entity-thumb {
+    grid-area: thumb;
+  }
+
+  .product-availability-row .entity-info {
+    grid-area: info;
+    min-width: 0;
+  }
+
+  .product-row-controls {
+    grid-area: controls;
+    width: 100%;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .product-row-controls .control-cell {
+    align-items: center;
+  }
+
+  .stock-input {
+    width: 100%;
+    max-width: 80px;
+    text-align: center;
+  }
 }
 
 /* ===== Small mobile (max 480) ===== */
