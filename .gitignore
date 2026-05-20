@@ -5,3 +5,9 @@
 *.txt
 
 Project Resources
+
+# Editor / IDE settings
+.vscode/
+.idea/
+.claude/
+*.code-workspace
