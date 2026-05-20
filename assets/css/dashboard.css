@@ -895,17 +895,44 @@
   margin-top: 8px;
 }
 
-/* ===== Logout button (sidebar + mobile header) - red text per brand ===== */
+/* ===== Logout button (sidebar + mobile header) - red pill with white text ===== */
 #btn-logout,
 #btn-logout-mobile {
-  color: var(--color-primary);
+  background: var(--color-primary);
+  color: #FFFFFF;
   font-weight: 600;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-primary);
+  padding: 8px 18px;
+  transition: background 0.15s ease, transform 0.1s ease;
 }
 
 #btn-logout:hover,
 #btn-logout-mobile:hover {
-  background: var(--color-primary-soft);
-  color: var(--color-primary);
+  background: var(--color-primary-dark);
+  color: #FFFFFF;
+  border-color: var(--color-primary-dark);
+}
+
+#btn-logout:active,
+#btn-logout-mobile:active {
+  transform: scale(0.98);
+}
+
+/* ===== Order card footer - badge + CTA with breathing room ===== */
+.order-card-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.order-card-footer .badge {
+  flex-shrink: 0;
+}
+
+.order-card-footer > span[style*="margin-left:auto"] {
+  margin-left: auto;
 }
 
 /* ===== Row action buttons (table / list edit + delete) ===== */

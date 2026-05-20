@@ -279,14 +279,17 @@
     all.forEach(function (o) {
       if (counts[o.orderStatus] !== undefined) counts[o.orderStatus]++;
     });
+    counts.history = (counts['picked-up'] || 0) + (counts.cancelled || 0);
     tabs.forEach(function (t) {
       var s = t.getAttribute('data-status');
       var c = t.querySelector('.status-count');
       if (c) c.textContent = (counts[s] || 0);
     });
 
-    // Filter to active status
-    var filtered = all.filter(function (o) { return o.orderStatus === ordersState.activeStatus; });
+    // Filter to active status (history shows terminal states: picked-up + cancelled)
+    var filtered = ordersState.activeStatus === 'history'
+      ? all.filter(function (o) { return o.orderStatus === 'picked-up' || o.orderStatus === 'cancelled'; })
+      : all.filter(function (o) { return o.orderStatus === ordersState.activeStatus; });
 
     // Sort newest first
     filtered.sort(function (a, b) {
@@ -296,7 +299,8 @@
     });
 
     if (!filtered.length) {
-      listEl.innerHTML = '<p class="text-muted" style="padding:24px; text-align:center;">No ' + escapeHtml(ordersState.activeStatus) + ' orders right now.</p>';
+      var emptyLabel = ordersState.activeStatus === 'history' ? 'past' : ordersState.activeStatus;
+      listEl.innerHTML = '<p class="text-muted" style="padding:24px; text-align:center;">No ' + escapeHtml(emptyLabel) + ' orders ' + (ordersState.activeStatus === 'history' ? 'yet.' : 'right now.') + '</p>';
       return;
     }
 
