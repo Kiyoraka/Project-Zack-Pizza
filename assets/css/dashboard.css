@@ -520,6 +520,11 @@
   background: var(--color-primary-soft);
   flex-shrink: 0;
   object-fit: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  line-height: 1;
 }
 
 .entity-body,
