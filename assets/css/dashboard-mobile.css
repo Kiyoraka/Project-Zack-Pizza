@@ -51,12 +51,18 @@
     display: flex;
   }
 
+  /* Bottom-nav handles all navigation on mobile -- hamburger button is redundant
+     (also not wired to any JS handler), so hide it across all dashboard pages */
+  .mobile-dash-header .hamburger {
+    display: none;
+  }
+
   /* Consistent mobile page title: left-aligned brand-stylized header
      applies uniformly across Main / Orders / Products / Settings */
   .mobile-dash-title {
     flex: 1;
     text-align: left;
-    margin-left: 8px;
+    margin-left: 0;
     font-size: 15px;
     font-weight: 800;
     text-transform: uppercase;
