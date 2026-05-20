@@ -920,6 +920,12 @@
 }
 
 /* ===== Outlet product availability row (image + name + price/stock/available grid) ===== */
+.entity-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .product-availability-row {
   align-items: center;
   gap: 16px;
