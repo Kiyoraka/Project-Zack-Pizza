@@ -95,12 +95,41 @@
     font-size: 14px;
   }
 
-  /* Week Route: swap desktop table for day cards on mobile */
-  #week-route-grid {
-    display: none;
+  /* Week Route: stack hero cards into single column, pills wrap-scroll */
+  .today-hero__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 18px;
   }
-  .week-route-cards {
-    display: flex;
+  .today-hero {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .route-card {
+    padding: 14px 16px;
+  }
+  .route-card__title {
+    font-size: 14px;
+  }
+  .route-card__location {
+    font-size: 15px;
+  }
+  .week-drawer {
+    margin-top: 24px;
+  }
+  .day-pill-strip {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 6px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .day-pill {
+    scroll-snap-align: start;
+    flex: 0 0 auto;
+    min-width: 64px;
+    padding: 8px 12px;
   }
 
   .menu-grid,

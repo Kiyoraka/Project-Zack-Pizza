@@ -35,7 +35,7 @@
     if (el) el.innerHTML = html;
   }
 
-  // ---------- Lorry card builder ----------
+  // ---------- Lorry card builder (Find your lorry / All lorries sections) ----------
   function lorryCardHtml(outlet, isActive) {
     var loc = outlet.todayLocation || {};
     var badge = isActive
@@ -67,6 +67,54 @@
           action,
         '</div>',
       '</div>'
+    ].join('');
+  }
+
+  // ---------- Route card builder (Where's Pizza Today section - separate from .lorry-card) ----------
+  var ROUTE_LORRY_EMOJI = {
+    'lorry-1': '&#129472;',  // cheese wedge
+    'lorry-2': '&#127798;',  // hot pepper
+    'lorry-3': '&#129382;',  // leafy green
+    'lorry-4': '&#127829;',  // pizza
+    'lorry-5': '&#129749;',  // canned food
+    'lorry-6': '&#127956;',  // beach with umbrella
+    'lorry-7': '&#127754;',  // water wave
+    'lorry-8': '&#128679;',  // construction
+    'lorry-9': '&#9968;&#65039;' // mountain
+  };
+
+  function formatHourLabel(hhmm) {
+    if (!hhmm) return '';
+    var parts = String(hhmm).split(':');
+    var h = parseInt(parts[0], 10);
+    if (isNaN(h)) return hhmm;
+    if (h === 0) return '12 AM';
+    if (h === 12) return '12 PM';
+    if (h === 24) return '12 AM';
+    if (h > 12) return (h - 12) + ' PM';
+    return h + ' AM';
+  }
+
+  function formatHoursRange(outlet) {
+    var loc = outlet.todayLocation || {};
+    if (!loc.hoursStart || !loc.hoursEnd) return '';
+    return formatHourLabel(loc.hoursStart) + ' &ndash; ' + formatHourLabel(loc.hoursEnd);
+  }
+
+  function routeCardHtml(outlet, locationName) {
+    var emoji = ROUTE_LORRY_EMOJI[outlet.id] || '&#128666;';
+    var hours = formatHoursRange(outlet);
+    var encodedLoc = encodeURIComponent(locationName);
+    return [
+      '<article class="route-card">',
+        '<header class="route-card__header">',
+          '<span class="route-card__emoji" aria-hidden="true">' + emoji + '</span>',
+          '<h3 class="route-card__title">' + escapeHtml(outlet.name) + '</h3>',
+        '</header>',
+        '<p class="route-card__location"><span aria-hidden="true">&#128205;</span> ' + escapeHtml(locationName) + '</p>',
+        (hours ? '<p class="route-card__hours"><span aria-hidden="true">&#128340;</span> ' + hours + '</p>' : ''),
+        '<button type="button" class="btn btn-primary route-card__cta" data-location="' + encodedLoc + '">Directions &rarr;</button>',
+      '</article>'
     ].join('');
   }
 
@@ -226,17 +274,6 @@
   var DAYS_ABBR = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   var DAYS_FULL = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   var MONTHS_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  var LORRY_EMOJI = {
-    'lorry-1': '&#129472;',  // cheese wedge
-    'lorry-2': '&#127798;',  // hot pepper
-    'lorry-3': '&#129382;',  // leafy green
-    'lorry-4': '&#127829;',  // pizza
-    'lorry-5': '&#129749;',  // canned food
-    'lorry-6': '&#127956;',  // beach with umbrella
-    'lorry-7': '&#127754;',  // water wave
-    'lorry-8': '&#128679;',  // construction
-    'lorry-9': '&#9968;&#65039;' // mountain
-  };
 
   var todayIdx = new Date().getDay();
   var activeIdx = todayIdx;
@@ -253,48 +290,14 @@
     return d;
   }
 
-  function formatHourLabel(hhmm) {
-    if (!hhmm) return '';
-    var parts = String(hhmm).split(':');
-    var h = parseInt(parts[0], 10);
-    if (isNaN(h)) return hhmm;
-    if (h === 0) return '12 AM';
-    if (h === 12) return '12 PM';
-    if (h === 24) return '12 AM';
-    if (h > 12) return (h - 12) + ' PM';
-    return h + ' AM';
-  }
-
-  function formatHoursRange(outlet) {
-    var loc = outlet.todayLocation || {};
-    if (!loc.hoursStart || !loc.hoursEnd) return '';
-    return formatHourLabel(loc.hoursStart) + ' &ndash; ' + formatHourLabel(loc.hoursEnd);
-  }
-
-  function todayHeroCardHtml(outlet, locationName) {
-    var emoji = LORRY_EMOJI[outlet.id] || '&#128666;';
-    var hours = formatHoursRange(outlet);
-    var encodedLoc = encodeURIComponent(locationName);
-    return [
-      '<article class="lorry-card">',
-        '<header class="lorry-card__header">',
-          '<span class="lorry-card__emoji" aria-hidden="true">' + emoji + '</span>',
-          '<h3 class="lorry-card__title">' + escapeHtml(outlet.name) + '</h3>',
-        '</header>',
-        '<p class="lorry-card__location"><span aria-hidden="true">&#128205;</span> ' + escapeHtml(locationName) + '</p>',
-        (hours ? '<p class="lorry-card__hours"><span aria-hidden="true">&#128340;</span> ' + hours + '</p>' : ''),
-        '<button type="button" class="btn btn-primary lorry-card__cta" data-location="' + encodedLoc + '">Directions &rarr;</button>',
-      '</article>'
-    ].join('');
-  }
-
   function renderTodayHero(dayIdx) {
     var outlets = (SAMPLE_DATA && SAMPLE_DATA.outlets) || [];
     var dayKey = DAYS_ABBR[dayIdx];
+    var isToday = dayIdx === todayIdx;
     var html = outlets.map(function (o) {
       var slot = (o.weekSchedule || []).filter(function (s) { return s.day === dayKey; })[0];
       var loc = slot ? slot.location : '—';
-      return todayHeroCardHtml(o, loc);
+      return routeCardHtml(o, loc);
     }).join('');
     setHtml('today-hero-grid', html);
 
@@ -305,12 +308,12 @@
     var dateLabel = DAYS_FULL[dayIdx] + ' &middot; ' + MONTHS_SHORT[d.getMonth()] + ' ' + d.getDate();
 
     if (heading) {
-      heading.textContent = dayIdx === todayIdx
+      heading.textContent = isToday
         ? "Where's Pizza Today?"
         : "Where's Pizza on " + DAYS_FULL[dayIdx] + '?';
     }
     if (dateEl) dateEl.innerHTML = dateLabel;
-    if (backLink) backLink.hidden = (dayIdx === todayIdx);
+    if (backLink) backLink.hidden = isToday;
   }
 
   function renderWeekDrawer() {
@@ -358,7 +361,7 @@
     var grid = document.getElementById('today-hero-grid');
     if (grid) {
       grid.addEventListener('click', function (e) {
-        var btn = e.target.closest ? e.target.closest('.lorry-card__cta') : null;
+        var btn = e.target.closest ? e.target.closest('.route-card__cta') : null;
         if (!btn) return;
         var loc = btn.getAttribute('data-location') || '';
         if (!loc) return;
