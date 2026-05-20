@@ -701,6 +701,23 @@
     if (!form) return false;
     if (!guardOrRedirect()) return true;
 
+    // Tab switcher
+    var tabs = form.querySelectorAll('.settings-tab');
+    var panels = form.querySelectorAll('.settings-panel');
+    for (var t = 0; t < tabs.length; t++) {
+      tabs[t].addEventListener('click', function () {
+        var target = this.getAttribute('data-panel');
+        for (var i = 0; i < tabs.length; i++) {
+          var isActive = tabs[i].getAttribute('data-panel') === target;
+          tabs[i].classList.toggle('active', isActive);
+          tabs[i].setAttribute('aria-selected', isActive ? 'true' : 'false');
+        }
+        for (var j = 0; j < panels.length; j++) {
+          panels[j].classList.toggle('active', panels[j].getAttribute('data-panel') === target);
+        }
+      });
+    }
+
     var brand = getBrand();
     var gateways = getGateways();
 

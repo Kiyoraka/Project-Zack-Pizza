@@ -889,6 +889,50 @@
   margin-top: 8px;
 }
 
+/* ===== Tab navigation (settings panels, products category filter) ===== */
+.settings-tabs,
+.category-tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 24px;
+  overflow-x: auto;
+}
+
+.settings-tab,
+.category-tab {
+  padding: 12px 20px;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--color-text-muted);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.15s ease, border-color 0.15s ease;
+  font-family: inherit;
+}
+
+.settings-tab:hover,
+.category-tab:hover {
+  color: var(--color-text);
+}
+
+.settings-tab.active,
+.category-tab.active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+.settings-panel {
+  display: none;
+}
+
+.settings-panel.active {
+  display: block;
+}
+
 /* Demo credentials block - clickable pills that auto-fill the form */
 .demo-creds {
   display: flex;
