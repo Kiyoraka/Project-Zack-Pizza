@@ -222,87 +222,150 @@
     setHtml('menu-preview', html);
   }
 
-  // ---------- Week route grid ----------
-  function renderWeekRoute(outlets) {
-    var days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  // ---------- Week route: today hero + week drawer ----------
+  var DAYS_ABBR = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  var DAYS_FULL = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  var MONTHS_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  var LORRY_EMOJI = {
+    'lorry-1': '&#129472;',  // cheese wedge
+    'lorry-2': '&#127798;',  // hot pepper
+    'lorry-3': '&#129382;',  // leafy green
+    'lorry-4': '&#127829;',  // pizza
+    'lorry-5': '&#129749;',  // canned food
+    'lorry-6': '&#127956;',  // beach with umbrella
+    'lorry-7': '&#127754;',  // water wave
+    'lorry-8': '&#128679;',  // construction
+    'lorry-9': '&#9968;&#65039;' // mountain
+  };
 
-    var header = [
-      '<div class="week-route-row week-route-header">',
-        '<div class="week-route-cell week-route-label">Lorry</div>',
-        days.map(function (d) {
-          return '<div class="week-route-cell week-route-day-label">' + d + '</div>';
-        }).join(''),
-      '</div>'
-    ].join('');
+  var todayIdx = new Date().getDay();
+  var activeIdx = todayIdx;
+  var weekStartDate = (function () {
+    var d = new Date();
+    d.setHours(0, 0, 0, 0);
+    d.setDate(d.getDate() - d.getDay());
+    return d;
+  })();
 
-    var rows = outlets.map(function (o) {
-      var scheduleByDay = {};
-      (o.weekSchedule || []).forEach(function (s) { scheduleByDay[s.day] = s.location; });
-
-      var cells = days.map(function (d) {
-        var loc = scheduleByDay[d] || '—';
-        return [
-          '<div class="week-route-cell">',
-            '<span class="day-pill">' + escapeHtml(loc) + '</span>',
-          '</div>'
-        ].join('');
-      }).join('');
-
-      return [
-        '<div class="week-route-row">',
-          '<div class="week-route-cell week-route-label">' + escapeHtml(o.name) + '</div>',
-          cells,
-        '</div>'
-      ].join('');
-    }).join('');
-
-    setHtml('week-route-grid', header + rows);
+  function dateForDayIdx(idx) {
+    var d = new Date(weekStartDate);
+    d.setDate(d.getDate() + idx);
+    return d;
   }
 
-  // ---------- Week route mobile cards (day-first, accordion) ----------
-  function renderWeekRouteCards(outlets) {
-    var days = [
-      { abbr: 'Mon', full: 'Monday' },
-      { abbr: 'Tue', full: 'Tuesday' },
-      { abbr: 'Wed', full: 'Wednesday' },
-      { abbr: 'Thu', full: 'Thursday' },
-      { abbr: 'Fri', full: 'Friday' },
-      { abbr: 'Sat', full: 'Saturday' },
-      { abbr: 'Sun', full: 'Sunday' }
-    ];
+  function formatHourLabel(hhmm) {
+    if (!hhmm) return '';
+    var parts = String(hhmm).split(':');
+    var h = parseInt(parts[0], 10);
+    if (isNaN(h)) return hhmm;
+    if (h === 0) return '12 AM';
+    if (h === 12) return '12 PM';
+    if (h === 24) return '12 AM';
+    if (h > 12) return (h - 12) + ' PM';
+    return h + ' AM';
+  }
 
-    // Today expanded by default; JS Date.getDay() returns 0=Sun..6=Sat
-    var todayIdx = (new Date().getDay() + 6) % 7; // shift so 0=Mon..6=Sun
-    var todayAbbr = days[todayIdx].abbr;
+  function formatHoursRange(outlet) {
+    var loc = outlet.todayLocation || {};
+    if (!loc.hoursStart || !loc.hoursEnd) return '';
+    return formatHourLabel(loc.hoursStart) + ' &ndash; ' + formatHourLabel(loc.hoursEnd);
+  }
 
-    var html = days.map(function (d) {
-      var rows = outlets.map(function (o) {
-        var entry = (o.weekSchedule || []).filter(function (s) { return s.day === d.abbr; })[0];
-        var loc = entry ? entry.location : '—';
-        return [
-          '<li class="day-card-row">',
-            '<span class="day-card-lorry">&#128666; ' + escapeHtml(o.name) + '</span>',
-            '<span class="day-card-location">&#128205; ' + escapeHtml(loc) + '</span>',
-          '</li>'
-        ].join('');
-      }).join('');
+  function todayHeroCardHtml(outlet, locationName) {
+    var emoji = LORRY_EMOJI[outlet.id] || '&#128666;';
+    var hours = formatHoursRange(outlet);
+    var encodedLoc = encodeURIComponent(locationName);
+    return [
+      '<article class="lorry-card">',
+        '<header class="lorry-card__header">',
+          '<span class="lorry-card__emoji" aria-hidden="true">' + emoji + '</span>',
+          '<h3 class="lorry-card__title">' + escapeHtml(outlet.name) + '</h3>',
+        '</header>',
+        '<p class="lorry-card__location"><span aria-hidden="true">&#128205;</span> ' + escapeHtml(locationName) + '</p>',
+        (hours ? '<p class="lorry-card__hours"><span aria-hidden="true">&#128340;</span> ' + hours + '</p>' : ''),
+        '<button type="button" class="btn btn-primary lorry-card__cta" data-location="' + encodedLoc + '">Directions &rarr;</button>',
+      '</article>'
+    ].join('');
+  }
 
-      var isOpen = d.abbr === todayAbbr;
-      var isToday = isOpen;
+  function renderTodayHero(dayIdx) {
+    var outlets = (SAMPLE_DATA && SAMPLE_DATA.outlets) || [];
+    var dayKey = DAYS_ABBR[dayIdx];
+    var html = outlets.map(function (o) {
+      var slot = (o.weekSchedule || []).filter(function (s) { return s.day === dayKey; })[0];
+      var loc = slot ? slot.location : '—';
+      return todayHeroCardHtml(o, loc);
+    }).join('');
+    setHtml('today-hero-grid', html);
 
+    var heading = document.getElementById('today-hero-heading');
+    var dateEl = document.getElementById('today-hero-date');
+    var backLink = document.getElementById('back-to-today');
+    var d = dateForDayIdx(dayIdx);
+    var dateLabel = DAYS_FULL[dayIdx] + ' &middot; ' + MONTHS_SHORT[d.getMonth()] + ' ' + d.getDate();
+
+    if (heading) {
+      heading.textContent = dayIdx === todayIdx
+        ? "Where's Pizza Today?"
+        : "Where's Pizza on " + DAYS_FULL[dayIdx] + '?';
+    }
+    if (dateEl) dateEl.innerHTML = dateLabel;
+    if (backLink) backLink.hidden = (dayIdx === todayIdx);
+  }
+
+  function renderWeekDrawer() {
+    var html = DAYS_ABBR.map(function (abbr, i) {
+      var d = dateForDayIdx(i);
+      var classes = ['day-pill'];
+      if (i === activeIdx) classes.push('day-pill--active');
+      if (i === todayIdx) classes.push('day-pill--today');
       return [
-        '<details class="day-card"' + (isOpen ? ' open' : '') + '>',
-          '<summary class="day-card-head">',
-            '<span class="day-card-title">' + d.full + (isToday ? ' <span class="day-card-today">TODAY</span>' : '') + '</span>',
-            '<span class="day-card-meta">' + outlets.length + ' lorries</span>',
-            '<span class="day-card-chevron" aria-hidden="true">&#x25BE;</span>',
-          '</summary>',
-          '<ul class="day-card-list">', rows, '</ul>',
-        '</details>'
+        '<button type="button" class="' + classes.join(' ') + '" data-day-idx="' + i + '">',
+          '<span class="day-pill__abbr">' + abbr.toUpperCase() + '</span>',
+          '<span class="day-pill__date">' + MONTHS_SHORT[d.getMonth()] + ' ' + d.getDate() + '</span>',
+          (i === todayIdx ? '<span class="day-pill__today-dot" aria-hidden="true"></span>' : ''),
+        '</button>'
       ].join('');
     }).join('');
+    setHtml('day-pill-strip', html);
+  }
 
-    setHtml('week-route-cards', html);
+  function attachDayPillHandlers() {
+    var strip = document.getElementById('day-pill-strip');
+    if (strip) {
+      strip.addEventListener('click', function (e) {
+        var btn = e.target.closest ? e.target.closest('.day-pill') : null;
+        if (!btn) return;
+        var idx = parseInt(btn.getAttribute('data-day-idx'), 10);
+        if (isNaN(idx) || idx === activeIdx) return;
+        activeIdx = idx;
+        renderTodayHero(activeIdx);
+        renderWeekDrawer();
+      });
+    }
+
+    var backLink = document.getElementById('back-to-today');
+    if (backLink) {
+      backLink.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (activeIdx === todayIdx) return;
+        activeIdx = todayIdx;
+        renderTodayHero(activeIdx);
+        renderWeekDrawer();
+      });
+    }
+
+    var grid = document.getElementById('today-hero-grid');
+    if (grid) {
+      grid.addEventListener('click', function (e) {
+        var btn = e.target.closest ? e.target.closest('.lorry-card__cta') : null;
+        if (!btn) return;
+        var loc = btn.getAttribute('data-location') || '';
+        if (!loc) return;
+        var url = 'https://www.google.com/maps/search/?api=1&query=' + loc;
+        window.open(url, '_blank', 'noopener,noreferrer');
+      });
+    }
   }
 
   // ---------- Cart badge ----------
@@ -344,8 +407,9 @@
     renderActiveLorries(outlets, '');
     renderAllLorries(outlets, '');
     renderMenuPreview(SAMPLE_DATA.products || []);
-    renderWeekRoute(outlets);
-    renderWeekRouteCards(outlets);
+    renderTodayHero(activeIdx);
+    renderWeekDrawer();
+    attachDayPillHandlers();
     renderCartBadge();
     wireLorrySearch(outlets);
   }
