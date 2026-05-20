@@ -225,6 +225,31 @@ p {
   color: var(--color-primary);
 }
 
+.badge-soft-yellow {
+  background: var(--color-accent-soft);
+  color: #6B4E00;
+}
+
+.badge-soft-orange {
+  background: #FFE3CC;
+  color: #B45309;
+}
+
+.badge-soft-green {
+  background: #DCFCE7;
+  color: #166534;
+}
+
+.badge-soft-grey {
+  background: #F3F4F6;
+  color: #6B7280;
+}
+
+.badge-soft {
+  background: #F3F4F6;
+  color: var(--color-text);
+}
+
 /* ===== Inputs ===== */
 .input {
   width: 100%;
