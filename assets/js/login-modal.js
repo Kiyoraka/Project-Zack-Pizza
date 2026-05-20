@@ -83,7 +83,7 @@
         try {
           if (role === 'admin') {
             localStorage.setItem('zackpizza.adminAuth', 'true');
-            window.location.href = 'admin-dashboard/analytics.html';
+            window.location.href = 'admin-dashboard/main.html';
           } else if (role === 'outlet') {
             // Default to lorry-1 if none picked yet (demo convenience)
             if (!localStorage.getItem('zackpizza.currentOutletId')) {

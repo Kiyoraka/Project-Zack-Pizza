@@ -46,6 +46,23 @@
     return DAYS_FULL[date.getDay()];
   }
 
+  function relativeTime(iso) {
+    if (!iso) return '';
+    var then = new Date(iso).getTime();
+    if (isNaN(then)) return '';
+    var now = Date.now();
+    var diffSec = Math.round((now - then) / 1000);
+    var abs = Math.abs(diffSec);
+    var suffix = diffSec >= 0 ? ' ago' : ' from now';
+    if (abs < 60) return abs + ' sec' + suffix;
+    var diffMin = Math.round(abs / 60);
+    if (diffMin < 60) return diffMin + ' min' + suffix;
+    var diffH = Math.round(abs / 3600);
+    if (diffH < 24) return diffH + ' h' + suffix;
+    var diffD = Math.round(abs / 86400);
+    return diffD + ' d' + suffix;
+  }
+
   function loadMirror(key, fallback) {
     try {
       var raw = localStorage.getItem(key);
@@ -177,9 +194,9 @@
     var form = qs('#admin-login-form');
     if (!form) return false;
 
-    // If already logged in, go straight to analytics
+    // If already logged in, go straight to Main overview
     if (isLoggedIn()) {
-      window.location.href = 'analytics.html';
+      window.location.href = 'main.html';
       return true;
     }
 
@@ -190,7 +207,7 @@
       var err = qs('#login-error');
       if (emailVal.trim().toLowerCase() === 'admin@gmail.com' && p === 'admin123') {
         setLoggedIn(true);
-        window.location.href = 'analytics.html';
+        window.location.href = 'main.html';
       } else {
         if (err) {
           err.textContent = 'Invalid credentials. Try admin@gmail.com / admin123.';
@@ -221,6 +238,103 @@
   }
 
   // ---------- ANALYTICS PAGE ----------
+  // ---------- MAIN OVERVIEW PAGE ----------
+  function initAdminMainPage() {
+    var grid = qs('#admin-main-kpi-grid');
+    if (!grid) return false;
+    if (!guardOrRedirect()) return true;
+
+    function isTodayDate(iso) {
+      if (!iso) return false;
+      var d = new Date(iso);
+      if (isNaN(d.getTime())) return false;
+      var now = new Date();
+      return d.getFullYear() === now.getFullYear()
+        && d.getMonth() === now.getMonth()
+        && d.getDate() === now.getDate();
+    }
+
+    function render() {
+      var orders = getAllOrders();
+      var outlets = getOutlets();
+      var products = getProducts();
+
+      // Today's revenue: paid orders dated today
+      var revenueToday = 0;
+      var ordersToday = 0;
+      orders.forEach(function (o) {
+        if (isTodayDate(o.createdAt)) {
+          ordersToday++;
+          if (o.paymentStatus === 'paid') revenueToday += Number(o.total) || 0;
+        }
+      });
+
+      var activeCount = 0;
+      outlets.forEach(function (o) { if (o.status === 'active') activeCount++; });
+      var totalLorries = outlets.length;
+      var closedCount = totalLorries - activeCount;
+
+      function setText(id, val) {
+        var el = qs('#' + id);
+        if (el) el.textContent = val;
+      }
+      setText('admin-kpi-revenue', formatPrice(revenueToday));
+      setText('admin-kpi-orders', String(ordersToday));
+      setText('admin-kpi-active', activeCount + ' / ' + totalLorries);
+      setText('admin-kpi-active-hint', closedCount === 0
+        ? 'all lorries open'
+        : closedCount + ' closed today');
+      setText('admin-kpi-products', String(products.length));
+      setText('admin-quick-outlets-hint', totalLorries + ' lorries -- routes, status, crew');
+      setText('admin-quick-products-hint', products.length + ' in catalog -- add, edit, hide');
+
+      // Recent activity: last 5 orders system-wide newest first
+      var recentEl = qs('#admin-recent-list');
+      if (recentEl) {
+        var recent = orders.slice().sort(function (a, b) {
+          var ta = new Date(a.createdAt).getTime() || 0;
+          var tb = new Date(b.createdAt).getTime() || 0;
+          return tb - ta;
+        }).slice(0, 5);
+
+        if (!recent.length) {
+          recentEl.innerHTML = '<p class="text-muted" style="padding:16px;">No orders yet.</p>';
+        } else {
+          var outletNameById = {};
+          outlets.forEach(function (o) { outletNameById[o.id] = o.name; });
+          recentEl.innerHTML = recent.map(function (o) {
+            var items = (o.items || []).length;
+            var lorryName = outletNameById[o.outletId] || o.outletId;
+            return [
+              '<a class="entity-row main-recent-row" href="analytics.html">',
+                '<div class="recent-id">' + escapeHtml(o.id) + '</div>',
+                '<span class="badge ' + statusBadgeClass(o.orderStatus) + ' recent-badge">' + escapeHtml(String(o.orderStatus || '').toUpperCase()) + '</span>',
+                '<div class="recent-customer">' + escapeHtml(lorryName) + ' &middot; ' + escapeHtml(o.customerName || 'Customer') + '</div>',
+                '<div class="recent-meta">' + items + ' item' + (items === 1 ? '' : 's') + ' &middot; ' + escapeHtml(relativeTime(o.createdAt)) + '</div>',
+                '<div class="recent-price">' + escapeHtml(formatPrice(o.total)) + '</div>',
+              '</a>'
+            ].join('');
+          }).join('');
+        }
+      }
+    }
+
+    var refresh = qs('#btn-refresh');
+    if (refresh) refresh.addEventListener('click', render);
+
+    render();
+    return true;
+  }
+
+  function statusBadgeClass(status) {
+    if (status === 'pending') return 'badge-soft-yellow';
+    if (status === 'preparing') return 'badge-soft-orange';
+    if (status === 'ready') return 'badge-soft-green';
+    if (status === 'picked-up') return 'badge-soft-grey';
+    if (status === 'cancelled') return 'badge-soft-red';
+    return 'badge-soft';
+  }
+
   function initAnalytics() {
     var chart = qs('#bar-chart');
     if (!chart) return false;
@@ -891,6 +1005,7 @@
     wireLogout();
     wireModalDismissers();
 
+    initAdminMainPage();
     initAnalytics();
     initOutlets();
     initProducts();
