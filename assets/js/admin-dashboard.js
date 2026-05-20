@@ -622,6 +622,8 @@
       if (priceField) priceField.value = (product.price != null) ? product.price : '';
       if (imageField) imageField.value = product.image || '';
       if (imageFileField) imageFileField.value = '';
+      var nameLabel = qs('#product-image-name');
+      if (nameLabel) nameLabel.textContent = product.image ? 'Current image kept' : 'No file chosen';
       if (availField) availField.checked = product.available !== false;
       refreshImagePreview(product.image || '');
 
@@ -634,7 +636,12 @@
       imageFileEl.dataset.wired = '1';
       imageFileEl.addEventListener('change', function () {
         var file = this.files && this.files[0];
-        if (!file) return;
+        var nameLabel = qs('#product-image-name');
+        if (!file) {
+          if (nameLabel) nameLabel.textContent = 'No file chosen';
+          return;
+        }
+        if (nameLabel) nameLabel.textContent = file.name;
         var reader = new FileReader();
         reader.onload = function (ev) {
           var dataUrl = ev.target.result;
