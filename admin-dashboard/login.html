@@ -20,16 +20,21 @@
 
     <form id="admin-login-form" class="form-section" novalidate>
       <div class="input-group">
-        <label class="input-label" for="input-username">Username</label>
-        <input class="input" id="input-username" name="username" type="text" autocomplete="username" placeholder="admin" required>
+        <label class="input-label" for="input-email">Email</label>
+        <input class="input" id="input-email" name="email" type="email" autocomplete="email" placeholder="admin@gmail.com" required>
       </div>
       <div class="input-group">
         <label class="input-label" for="input-password">Password</label>
-        <input class="input" id="input-password" name="password" type="password" autocomplete="current-password" placeholder="admin" required>
+        <input class="input" id="input-password" name="password" type="password" autocomplete="current-password" placeholder="admin123" required>
       </div>
 
       <p id="login-error" class="form-error" style="display:none; color: var(--color-primary); margin-top: 12px;"></p>
-      <p class="text-muted" style="font-size:12px; margin-top:8px;">Demo credentials: <code>admin</code> / <code>admin</code></p>
+      <p id="demo-fill" class="text-muted demo-creds" style="font-size:12px; margin-top:8px;">
+        Demo credentials (click to fill):
+        <button type="button" class="demo-cred-btn" data-fill-field="input-email" data-fill-value="admin@gmail.com">admin@gmail.com</button>
+        /
+        <button type="button" class="demo-cred-btn" data-fill-field="input-password" data-fill-value="admin123">admin123</button>
+      </p>
 
       <button id="btn-login" type="submit" class="btn btn-primary btn-lg" style="width:100%; justify-content:center; margin-top:16px;">
         Sign In →

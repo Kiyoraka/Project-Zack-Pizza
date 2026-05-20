@@ -179,7 +179,8 @@
     var form = qs('#outlet-login-form');
     if (!form) return;
     var listEl = qs('#lorry-radio-list');
-    var pinInput = qs('#input-pin');
+    var emailInput = qs('#input-email');
+    var passwordInput = qs('#input-password');
     var errEl = qs('#login-error');
     var outlets = (window.SAMPLE_DATA && SAMPLE_DATA.outlets) ? SAMPLE_DATA.outlets : [];
 
@@ -225,14 +226,33 @@
         showError('Please select a lorry.');
         return;
       }
-      var pinVal = (pinInput && pinInput.value) ? pinInput.value.trim() : '';
-      if (pinVal.length < 4) {
-        showError('Please enter your crew PIN (at least 4 digits).');
+      var emailVal = (emailInput && emailInput.value) ? emailInput.value.trim().toLowerCase() : '';
+      var passwordVal = (passwordInput && passwordInput.value) ? passwordInput.value : '';
+      if (emailVal !== 'outlet@gmail.com' || passwordVal !== 'admin123') {
+        showError('Invalid credentials. Try outlet@gmail.com / admin123.');
         return;
       }
       try { localStorage.setItem(KEY_OUTLET_ID, selected.value); } catch (err) {}
       window.location.href = 'orders.html';
     });
+
+    // Click-to-fill demo credentials
+    var demoFill = qs('#demo-fill');
+    if (demoFill) {
+      demoFill.addEventListener('click', function (e) {
+        var t = e.target;
+        if (!t || !t.getAttribute) return;
+        var field = t.getAttribute('data-fill-field');
+        var val = t.getAttribute('data-fill-value');
+        if (field && val) {
+          var input = qs('#' + field);
+          if (input) {
+            input.value = val;
+            input.focus();
+          }
+        }
+      });
+    }
   }
 
   // =====================================================================

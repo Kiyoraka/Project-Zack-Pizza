@@ -185,19 +185,38 @@
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var u = (qs('#input-username') || {}).value || '';
+      var emailVal = (qs('#input-email') || {}).value || '';
       var p = (qs('#input-password') || {}).value || '';
       var err = qs('#login-error');
-      if (u.trim() === 'admin' && p === 'admin') {
+      if (emailVal.trim().toLowerCase() === 'admin@gmail.com' && p === 'admin123') {
         setLoggedIn(true);
         window.location.href = 'analytics.html';
       } else {
         if (err) {
-          err.textContent = 'Invalid credentials. Try admin / admin.';
+          err.textContent = 'Invalid credentials. Try admin@gmail.com / admin123.';
           err.style.display = '';
         }
       }
     });
+
+    // Click-to-fill demo credentials
+    var demoFill = qs('#demo-fill');
+    if (demoFill) {
+      demoFill.addEventListener('click', function (e) {
+        var t = e.target;
+        if (!t || !t.getAttribute) return;
+        var field = t.getAttribute('data-fill-field');
+        var val = t.getAttribute('data-fill-value');
+        if (field && val) {
+          var input = qs('#' + field);
+          if (input) {
+            input.value = val;
+            input.focus();
+          }
+        }
+      });
+    }
+
     return true;
   }
 

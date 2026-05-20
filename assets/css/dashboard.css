@@ -889,6 +889,43 @@
   margin-top: 8px;
 }
 
+/* Demo credentials block - clickable pills that auto-fill the form */
+.demo-creds {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.login-card .btn.demo-cred-btn,
+.demo-cred-btn {
+  width: auto;
+  display: inline-flex;
+  align-items: center;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary-soft);
+  border-radius: var(--radius-pill);
+  padding: 3px 10px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+}
+
+.login-card .btn.demo-cred-btn:hover,
+.demo-cred-btn:hover {
+  background: var(--color-primary);
+  color: #FFFFFF;
+  border-color: var(--color-primary);
+}
+
+.login-card .btn.demo-cred-btn:active,
+.demo-cred-btn:active {
+  transform: scale(0.96);
+}
+
 /* ===== Pre-auth bottom nav preview ===== */
 .bottom-nav.preview,
 .bottom-nav-outlet.preview,

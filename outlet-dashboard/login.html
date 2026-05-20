@@ -24,14 +24,24 @@
       </div>
 
       <div class="input-group" style="margin-top:24px">
-        <label class="input-label" for="input-pin">Crew PIN</label>
-        <input class="input" id="input-pin" name="pin" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="off" placeholder="••••" required>
+        <label class="input-label" for="input-email">Email</label>
+        <input class="input" id="input-email" name="email" type="email" autocomplete="email" placeholder="outlet@gmail.com" required>
+      </div>
+      <div class="input-group">
+        <label class="input-label" for="input-password">Password</label>
+        <input class="input" id="input-password" name="password" type="password" autocomplete="current-password" placeholder="admin123" required>
       </div>
 
       <p id="login-error" class="form-error" style="display:none; color: var(--color-primary); margin-top: 12px;"></p>
+      <p id="demo-fill" class="text-muted demo-creds" style="font-size:12px; margin-top:8px;">
+        Demo credentials (click to fill):
+        <button type="button" class="demo-cred-btn" data-fill-field="input-email" data-fill-value="outlet@gmail.com">outlet@gmail.com</button>
+        /
+        <button type="button" class="demo-cred-btn" data-fill-field="input-password" data-fill-value="admin123">admin123</button>
+      </p>
 
       <button id="btn-login" type="submit" class="btn btn-primary btn-lg" style="width:100%; justify-content:center; margin-top:16px;">
-        Enter Dashboard →
+        Enter Dashboard &rarr;
       </button>
     </form>
 
