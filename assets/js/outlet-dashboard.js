@@ -425,37 +425,89 @@
       byCat[c].push(p);
     });
 
-    function render() {
-      var outOfStock = outlet.outOfStockToday || [];
-      var html = order.map(function (cat) {
-        var rows = byCat[cat].map(function (p) {
-          var unavailable = outOfStock.indexOf(p.id) !== -1;
-          var checked = unavailable ? '' : 'checked';
-          return [
-            '<div class="entity-row">',
-              '<div class="entity-thumb" style="width:60px;height:60px;background:linear-gradient(135deg,#fed7aa,#fca5a5);border-radius:8px;flex-shrink:0;"></div>',
-              '<div class="entity-info" style="flex:1;min-width:0;">',
-                '<p class="entity-name"><strong>' + escapeHtml(p.name) + '</strong></p>',
-                '<p class="text-muted entity-desc" style="font-size:13px;">' + escapeHtml(p.description || '') + '</p>',
-              '</div>',
-              '<div class="entity-price" style="font-weight:600;">' + escapeHtml(formatPrice(p.price)) + '</div>',
-              '<label class="toggle-switch" style="display:flex;align-items:center;gap:8px;margin-left:16px;">',
-                '<input type="checkbox" class="product-toggle" data-product-id="' + escapeHtml(p.id) + '" ' + checked + '>',
-                '<span class="toggle-label text-muted" style="font-size:12px;">Available today</span>',
-              '</label>',
-            '</div>'
-          ].join('');
-        }).join('');
-        return [
-          '<section class="product-category-block" style="margin-bottom:24px;">',
-            '<h3 class="category-heading">' + escapeHtml(cat) + '</h3>',
-            '<div class="entity-rows">' + rows + '</div>',
-          '</section>'
-        ].join('');
-      }).join('');
-      container.innerHTML = html || '<p class="text-muted">No products available.</p>';
+    var activeCat = order[0] || '';
 
-      // Wire toggles
+    function getStockMap() {
+      var ov = getOutletOverrides(outlet.id);
+      return (ov && ov.stockByProduct && typeof ov.stockByProduct === 'object') ? ov.stockByProduct : {};
+    }
+
+    function getStockForProduct(pid) {
+      var sm = getStockMap();
+      // Default stock when never set: 10 pieces (sane demo default)
+      return (sm.hasOwnProperty(pid)) ? Number(sm[pid]) : 10;
+    }
+
+    function setStockForProduct(pid, n) {
+      var ov = getOutletOverrides(outlet.id);
+      if (!ov.stockByProduct || typeof ov.stockByProduct !== 'object') ov.stockByProduct = {};
+      ov.stockByProduct[pid] = Math.max(0, Number(n) || 0);
+      saveOutletOverrides(outlet.id, ov);
+    }
+
+    function productImageStyle(p) {
+      if (p.image) {
+        var src = /^(data:|https?:|\.\.\/)/.test(p.image) ? p.image : '../' + p.image;
+        return 'background-image:url(\'' + escapeHtml(src) + '\'); background-size:cover; background-position:center;';
+      }
+      return 'background:linear-gradient(135deg,#fed7aa,#fca5a5);';
+    }
+
+    function rowHtml(p) {
+      var outOfStock = outlet.outOfStockToday || [];
+      var unavailable = outOfStock.indexOf(p.id) !== -1;
+      var stock = getStockForProduct(p.id);
+      var effectiveAvailable = !unavailable && stock > 0;
+      var checked = effectiveAvailable ? 'checked' : '';
+      return [
+        '<div class="entity-row product-availability-row">',
+          '<div class="entity-thumb product-thumb" style="' + productImageStyle(p) + '"></div>',
+          '<div class="entity-info" style="flex:1;min-width:0;">',
+            '<p class="entity-name"><strong>' + escapeHtml(p.name) + '</strong></p>',
+            '<p class="text-muted entity-desc" style="font-size:13px;">' + escapeHtml(p.description || '') + '</p>',
+          '</div>',
+          '<div class="entity-price" style="font-weight:600;">' + escapeHtml(formatPrice(p.price)) + '</div>',
+          '<div class="stock-control">',
+            '<label class="stock-label">Stock</label>',
+            '<input type="number" class="input stock-input" min="0" step="1" value="' + stock + '" data-product-id="' + escapeHtml(p.id) + '">',
+          '</div>',
+          '<label class="toggle-switch product-availability-toggle">',
+            '<input type="checkbox" class="product-toggle" data-product-id="' + escapeHtml(p.id) + '" ' + checked + '>',
+            '<span class="toggle-label text-muted">Available today</span>',
+          '</label>',
+        '</div>'
+      ].join('');
+    }
+
+    function render() {
+      if (!order.length) {
+        container.innerHTML = '<p class="text-muted">No products available.</p>';
+        return;
+      }
+      var tabs = order.map(function (cat) {
+        var cls = cat === activeCat ? 'category-tab active' : 'category-tab';
+        return '<button type="button" class="' + cls + '" data-cat="' + escapeHtml(cat) + '">' + escapeHtml(cat) + '</button>';
+      }).join('');
+
+      var activeProducts = byCat[activeCat] || [];
+      var rows = activeProducts.map(rowHtml).join('');
+
+      container.innerHTML = [
+        '<nav class="category-tabs">' + tabs + '</nav>',
+        '<div class="entity-rows">' + rows + '</div>'
+      ].join('');
+
+      // Wire tab clicks
+      qsa('.category-tab', container).forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var cat = btn.getAttribute('data-cat');
+          if (cat === activeCat) return;
+          activeCat = cat;
+          render();
+        });
+      });
+
+      // Wire availability toggles
       qsa('.product-toggle', container).forEach(function (cb) {
         cb.addEventListener('click', function () {
           var pid = cb.getAttribute('data-product-id');
@@ -465,15 +517,34 @@
             : (outlet.outOfStockToday || []).slice();
           var idx = list.indexOf(pid);
           if (cb.checked) {
-            // available → remove from out-of-stock
             if (idx !== -1) list.splice(idx, 1);
           } else {
-            // unavailable → add to out-of-stock
             if (idx === -1) list.push(pid);
           }
           ov.outOfStockToday = list;
           saveOutletOverrides(outlet.id, ov);
           outlet.outOfStockToday = list;
+        });
+      });
+
+      // Wire stock inputs
+      qsa('.stock-input', container).forEach(function (input) {
+        input.addEventListener('change', function () {
+          var pid = input.getAttribute('data-product-id');
+          var n = Math.max(0, parseInt(input.value, 10) || 0);
+          input.value = n;
+          setStockForProduct(pid, n);
+          // Auto-toggle availability based on stock count
+          var toggle = container.querySelector('.product-toggle[data-product-id="' + pid + '"]');
+          if (toggle) {
+            if (n === 0 && toggle.checked) {
+              toggle.checked = false;
+              toggle.dispatchEvent(new Event('click'));
+            } else if (n > 0 && !toggle.checked) {
+              toggle.checked = true;
+              toggle.dispatchEvent(new Event('click'));
+            }
+          }
         });
       });
     }
