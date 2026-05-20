@@ -919,7 +919,7 @@
   white-space: nowrap;
 }
 
-/* ===== Outlet product availability row (image + name + price + stock + toggle) ===== */
+/* ===== Outlet product availability row (image + name + price/stock/available grid) ===== */
 .product-availability-row {
   align-items: center;
   gap: 16px;
@@ -929,38 +929,63 @@
   background-color: var(--color-bg-soft);
 }
 
-.stock-control {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+.product-availability-row .entity-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.product-availability-row .entity-desc {
+  font-size: 13px;
+}
+
+.product-row-controls {
+  display: grid;
+  grid-template-columns: 96px 88px 104px;
+  gap: 20px;
+  align-items: center;
   flex-shrink: 0;
 }
 
-.stock-label {
-  font-size: 11px;
-  font-weight: 600;
+.control-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  min-width: 0;
+}
+
+.control-label {
+  font-size: 10px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   color: var(--color-text-muted);
+  line-height: 1;
+}
+
+.control-value {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text);
 }
 
 .stock-input {
-  width: 72px;
+  width: 100%;
   padding: 6px 10px;
   font-size: 14px;
 }
 
 .product-availability-toggle {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-left: 16px;
-  flex-shrink: 0;
   cursor: pointer;
+  margin: 0;
 }
 
 .product-availability-toggle .toggle-label {
-  font-size: 12px;
+  font-size: 13px;
+  color: var(--color-text);
 }
 
 /* ===== Product thumb (square image preview in product table) ===== */
