@@ -73,9 +73,20 @@
     </section>
 
     <section id="week-route" class="week-route-section container">
-      <h2>This Week's Route</h2>
-      <div id="week-route-grid" class="week-route"></div>
-      <div id="week-route-cards" class="week-route-cards"></div>
+      <div class="today-hero__header">
+        <div>
+          <h2 id="today-hero-heading">Where's Pizza Today?</h2>
+          <p class="today-hero__date" id="today-hero-date"></p>
+        </div>
+        <a href="#" id="back-to-today" class="back-to-today" hidden>&#x21BA; Back to today</a>
+      </div>
+      <div id="today-hero-grid" class="today-hero"></div>
+      <details class="week-drawer" id="week-drawer">
+        <summary class="week-drawer__summary">
+          <span class="week-drawer__label">See the rest of this week</span>
+        </summary>
+        <div id="day-pill-strip" class="day-pill-strip"></div>
+      </details>
     </section>
 
     <section id="all-lorries" class="lorries-section container">
