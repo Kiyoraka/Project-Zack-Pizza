@@ -59,7 +59,11 @@
           </div>
           <div class="input-group">
             <label class="input-label" for="brand-logo">Logo file</label>
-            <input class="input" id="brand-logo" name="brand-logo" type="file" accept="image/*">
+            <div class="file-upload-row">
+              <input id="brand-logo" name="brand-logo" type="file" accept="image/*" class="visually-hidden">
+              <label for="brand-logo" class="btn btn-secondary btn-sm image-upload-btn">📁 Choose logo</label>
+              <span id="brand-logo-name" class="text-muted image-upload-name">No file chosen</span>
+            </div>
           </div>
           <div class="form-row" style="display:flex; gap:12px;">
             <div class="input-group" style="flex:1">

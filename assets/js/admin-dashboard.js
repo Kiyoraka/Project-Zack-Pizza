@@ -124,7 +124,7 @@
         el.addEventListener('click', function (e) {
           e.preventDefault();
           setLoggedIn(false);
-          window.location.href = 'login.html';
+          window.location.href = '../index.html';
         });
       }
     }
@@ -751,6 +751,16 @@
     var form = qs('#admin-settings-form');
     if (!form) return false;
     if (!guardOrRedirect()) return true;
+
+    // Brand logo file input -> filename echo
+    var brandLogoInput = qs('#brand-logo');
+    var brandLogoName = qs('#brand-logo-name');
+    if (brandLogoInput && brandLogoName) {
+      brandLogoInput.addEventListener('change', function () {
+        var file = this.files && this.files[0];
+        brandLogoName.textContent = file ? file.name : 'No file chosen';
+      });
+    }
 
     // Tab switcher
     var tabs = form.querySelectorAll('.settings-tab');

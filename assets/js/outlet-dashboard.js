@@ -3,6 +3,12 @@
 (function () {
   'use strict';
 
+  // data.js declares SAMPLE_DATA with const, which does NOT attach to window in modern browsers.
+  // Bridge it so the existing window.SAMPLE_DATA checks throughout this file resolve correctly.
+  if (typeof SAMPLE_DATA !== 'undefined' && !window.SAMPLE_DATA) {
+    window.SAMPLE_DATA = SAMPLE_DATA;
+  }
+
   // ---------- Storage keys ----------
   var KEY_OUTLET_ID = 'zackpizza.currentOutletId';
   var KEY_OVERRIDES_PREFIX = 'zackpizza.outlets.overrides.'; // + outletId
@@ -159,7 +165,7 @@
       if (btn) {
         btn.addEventListener('click', function () {
           try { localStorage.removeItem(KEY_OUTLET_ID); } catch (e) {}
-          window.location.href = 'login.html';
+          window.location.href = '../index.html';
         });
       }
     });
