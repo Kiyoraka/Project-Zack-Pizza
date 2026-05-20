@@ -68,6 +68,23 @@
     return diffD + ' d' + suffix;
   }
 
+  function isToday(iso) {
+    if (!iso) return false;
+    var d = new Date(iso);
+    if (isNaN(d.getTime())) return false;
+    var now = new Date();
+    return d.getFullYear() === now.getFullYear()
+      && d.getMonth() === now.getMonth()
+      && d.getDate() === now.getDate();
+  }
+
+  function getPickupTimestamp(order) {
+    var overrides = readJson(KEY_STATUS_OVERRIDES, {}) || {};
+    var ov = overrides[order.id];
+    if (ov && ov.pickedUpAt) return ov.pickedUpAt;
+    return order.createdAt;
+  }
+
   // ---------- Outlet helpers ----------
   function getCurrentOutletId() {
     try { return localStorage.getItem(KEY_OUTLET_ID); } catch (e) { return null; }
@@ -112,9 +129,31 @@
     return readJson(KEY_STATUS_OVERRIDES, {}) || {};
   }
 
-  function setStatusOverride(orderId, status) {
+  // Override shape: either a plain string status (legacy) or an object { status, pickedUpAt, ... }.
+  // Readers must use overrideStatus(o) to extract the status field regardless of shape.
+  function overrideStatus(ov) {
+    if (!ov) return null;
+    if (typeof ov === 'string') return ov;
+    if (typeof ov === 'object' && ov.status) return ov.status;
+    return null;
+  }
+
+  function setStatusOverride(orderId, status, extra) {
     var map = getStatusOverrides();
-    map[orderId] = status;
+    var entry = { status: status };
+    // Preserve any prior fields (pickedUpAt etc.) when re-overriding the same order
+    var prior = map[orderId];
+    if (prior && typeof prior === 'object') {
+      for (var k in prior) {
+        if (prior.hasOwnProperty(k) && k !== 'status') entry[k] = prior[k];
+      }
+    }
+    if (extra && typeof extra === 'object') {
+      for (var k2 in extra) {
+        if (extra.hasOwnProperty(k2)) entry[k2] = extra[k2];
+      }
+    }
+    map[orderId] = entry;
     writeJson(KEY_STATUS_OVERRIDES, map);
   }
 
@@ -129,10 +168,11 @@
     var combined = base.concat(appended);
     var overrides = getStatusOverrides();
     return combined.map(function (o) {
-      if (overrides[o.id]) {
+      var ovStatus = overrideStatus(overrides[o.id]);
+      if (ovStatus) {
         var copy = {};
         for (var k in o) if (o.hasOwnProperty(k)) copy[k] = o[k];
-        copy.orderStatus = overrides[o.id];
+        copy.orderStatus = ovStatus;
         return copy;
       }
       return o;
@@ -274,22 +314,40 @@
 
     var all = getAllOrders().filter(function (o) { return o.outletId === outlet.id; });
 
-    // Counts
-    var counts = { pending: 0, preparing: 0, ready: 0, 'picked-up': 0, cancelled: 0 };
+    // Counts -- picked-up and history are date-partitioned so they never overlap
+    var counts = { pending: 0, preparing: 0, ready: 0, 'picked-up': 0, cancelled: 0, history: 0 };
     all.forEach(function (o) {
-      if (counts[o.orderStatus] !== undefined) counts[o.orderStatus]++;
+      if (o.orderStatus === 'picked-up') {
+        if (isToday(getPickupTimestamp(o))) counts['picked-up']++;
+        else counts.history++;
+      } else if (o.orderStatus === 'cancelled') {
+        counts.cancelled++;
+        if (!isToday(o.createdAt)) counts.history++;
+      } else if (counts[o.orderStatus] !== undefined) {
+        counts[o.orderStatus]++;
+      }
     });
-    counts.history = (counts['picked-up'] || 0) + (counts.cancelled || 0);
     tabs.forEach(function (t) {
       var s = t.getAttribute('data-status');
       var c = t.querySelector('.status-count');
       if (c) c.textContent = (counts[s] || 0);
     });
 
-    // Filter to active status (history shows terminal states: picked-up + cancelled)
-    var filtered = ordersState.activeStatus === 'history'
-      ? all.filter(function (o) { return o.orderStatus === 'picked-up' || o.orderStatus === 'cancelled'; })
-      : all.filter(function (o) { return o.orderStatus === ordersState.activeStatus; });
+    // Filter dispatch: picked-up = today's pickups, history = terminal-state orders older than today
+    var filtered;
+    if (ordersState.activeStatus === 'picked-up') {
+      filtered = all.filter(function (o) {
+        return o.orderStatus === 'picked-up' && isToday(getPickupTimestamp(o));
+      });
+    } else if (ordersState.activeStatus === 'history') {
+      filtered = all.filter(function (o) {
+        if (o.orderStatus === 'picked-up') return !isToday(getPickupTimestamp(o));
+        if (o.orderStatus === 'cancelled') return !isToday(o.createdAt);
+        return false;
+      });
+    } else {
+      filtered = all.filter(function (o) { return o.orderStatus === ordersState.activeStatus; });
+    }
 
     // Sort newest first
     filtered.sort(function (a, b) {
@@ -312,7 +370,8 @@
         var orderId = btn.getAttribute('data-order-id');
         var next = btn.getAttribute('data-next-status');
         if (!orderId || !next) return;
-        setStatusOverride(orderId, next);
+        var extra = (next === 'picked-up') ? { pickedUpAt: new Date().toISOString() } : null;
+        setStatusOverride(orderId, next, extra);
         renderOrdersTabsAndList(outlet);
       });
     });
