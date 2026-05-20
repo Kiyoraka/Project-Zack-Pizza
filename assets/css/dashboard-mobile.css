@@ -200,6 +200,28 @@
     grid-column: 1 / -1;
   }
 
+  /* Recent activity card: vertical stack on mobile for clean reading
+     Top row: ID + status badge
+     Middle: customer name on its own line
+     Bottom row: meta + price */
+  .main-recent-row {
+    grid-template-areas:
+      "id        badge"
+      "customer  customer"
+      "meta      price";
+    grid-template-columns: 1fr auto;
+    column-gap: 12px;
+  }
+
+  .recent-id {
+    font-size: 13px;
+    white-space: normal;
+  }
+
+  .recent-meta {
+    font-size: 12px;
+  }
+
   /* ===== Mobile product availability card (vertical layout) =====
      Desktop uses a 3-column row (image | info | controls). Mobile reflows
      into a vertical card: image+name+description on top, then a full-width

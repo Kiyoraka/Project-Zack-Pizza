@@ -535,13 +535,11 @@
             var items = (o.items || []).length;
             return [
               '<a class="entity-row main-recent-row" href="orders.html">',
-                '<div class="entity-info" style="flex:1;min-width:0;">',
-                  '<p class="entity-name"><strong>' + escapeHtml(o.id) + '</strong> &middot; ',
-                  escapeHtml(o.customerName || 'Customer') + '</p>',
-                  '<p class="text-muted" style="font-size:13px;">' + items + ' item' + (items === 1 ? '' : 's') + ' &middot; ' + escapeHtml(relativeTime(o.createdAt)) + '</p>',
-                '</div>',
-                '<div class="entity-price" style="font-weight:600;">' + escapeHtml(formatPrice(o.total)) + '</div>',
-                '<span class="badge ' + statusBadgeClass(o.orderStatus) + '">' + escapeHtml(String(o.orderStatus || '').toUpperCase()) + '</span>',
+                '<div class="recent-id">' + escapeHtml(o.id) + '</div>',
+                '<span class="badge ' + statusBadgeClass(o.orderStatus) + ' recent-badge">' + escapeHtml(String(o.orderStatus || '').toUpperCase()) + '</span>',
+                '<div class="recent-customer">' + escapeHtml(o.customerName || 'Customer') + '</div>',
+                '<div class="recent-meta">' + items + ' item' + (items === 1 ? '' : 's') + ' &middot; ' + escapeHtml(relativeTime(o.createdAt)) + '</div>',
+                '<div class="recent-price">' + escapeHtml(formatPrice(o.total)) + '</div>',
               '</a>'
             ].join('');
           }).join('');

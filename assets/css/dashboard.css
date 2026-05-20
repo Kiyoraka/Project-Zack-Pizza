@@ -1063,10 +1063,51 @@
   text-decoration: none;
   color: inherit;
   cursor: pointer;
+  display: grid;
+  grid-template-areas:
+    "id       customer price badge"
+    "id       meta     meta  meta";
+  grid-template-columns: auto 1fr auto auto;
+  column-gap: 16px;
+  row-gap: 4px;
+  align-items: center;
 }
 
 .main-recent-row:hover {
   border-color: var(--color-primary);
+}
+
+.recent-id {
+  grid-area: id;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.recent-customer {
+  grid-area: customer;
+  font-weight: 600;
+  color: var(--color-text);
+  min-width: 0;
+}
+
+.recent-meta {
+  grid-area: meta;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.recent-price {
+  grid-area: price;
+  font-weight: 700;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.recent-badge {
+  grid-area: badge;
+  white-space: nowrap;
 }
 
 /* ===== Outlet product availability row (image + name + price/stock/available grid) ===== */
