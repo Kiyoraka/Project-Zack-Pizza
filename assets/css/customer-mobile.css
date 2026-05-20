@@ -24,7 +24,8 @@
   .site-nav {
     display: none;
   }
-  .site-header .header-cta {
+  .site-header .header-cta,
+  .site-header .header-actions {
     display: none;
   }
   .hamburger {

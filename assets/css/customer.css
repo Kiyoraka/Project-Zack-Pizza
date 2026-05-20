@@ -409,6 +409,52 @@
   font-size: 11px;
 }
 
+/* ===== Header Actions (login + cta/cart grouped on right) ===== */
+.header-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ===== Login Modal (form polish on top of global .modal-* primitives) ===== */
+#login-modal .modal-content {
+  max-width: 420px;
+}
+
+#login-modal .input-group {
+  margin-bottom: 16px;
+}
+
+#login-modal .login-submit {
+  width: 100%;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+#login-modal .form-error {
+  margin: 4px 0 12px;
+  color: var(--color-primary);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+#login-modal .login-footer-text {
+  margin: 16px 0 0;
+  font-size: 13px;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+#login-modal .login-footer-text a {
+  color: var(--color-primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+#login-modal .login-footer-text a:hover {
+  text-decoration: underline;
+}
+
 /* ===== Week Route: Today Hero + Week Drawer ===== */
 .week-route-section {
   padding: 64px 0;
@@ -642,7 +688,7 @@
 .outlet-hero {
   background: linear-gradient(135deg, #E63946 0%, #FFD60A 100%);
   color: #FFFFFF;
-  padding: 56px 0;
+  padding: 56px 0 72px;
 }
 
 .outlet-hero h1 {
@@ -681,14 +727,19 @@
   font-weight: 500;
 }
 
-.outlet-hero .maps-link {
+.outlet-hero .maps-link,
+.outlet-hero #outlet-maps {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  margin-top: 16px;
+  margin-top: 20px;
   font-weight: 600;
   color: #FFFFFF;
   text-decoration: underline;
+}
+
+.outlet-hero #outlet-maps {
+  text-decoration: none;
 }
 
 /* ===== Outlet Menu ===== */
@@ -709,7 +760,8 @@
   height: 4px;
 }
 
-.tab {
+.tab,
+.category-tab {
   padding: 12px 16px;
   font-weight: 600;
   font-size: 14px;
@@ -722,11 +774,13 @@
   transition: color 0.15s, border-color 0.15s;
 }
 
-.tab:hover {
+.tab:hover,
+.category-tab:hover {
   color: var(--color-text);
 }
 
-.tab-active {
+.tab-active,
+.category-tab.active {
   color: var(--color-primary);
   border-bottom-color: var(--color-primary);
 }
