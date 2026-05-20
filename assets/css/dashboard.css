@@ -889,6 +889,52 @@
   margin-top: 8px;
 }
 
+/* ===== Row action buttons (table / list edit + delete) ===== */
+.row-actions {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.row-actions .btn {
+  white-space: nowrap;
+}
+
+/* ===== Product thumb (square image preview in product table) ===== */
+.entity-thumb.product-thumb {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  background: var(--color-bg-soft);
+  overflow: hidden;
+}
+
+/* ===== Image upload row (product modal: preview + file input side-by-side) ===== */
+.image-upload-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.image-upload-preview {
+  width: 96px;
+  height: 96px;
+  flex: 0 0 96px;
+  border-radius: var(--radius-card);
+  border: 1px dashed var(--color-border);
+  background: var(--color-bg-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  color: var(--color-text-muted);
+}
+
+.image-upload-controls {
+  flex: 1;
+  min-width: 0;
+}
+
 /* ===== Tab navigation (settings panels, products category filter) ===== */
 .settings-tabs,
 .category-tabs {

@@ -382,9 +382,9 @@
             '<p class="text-muted" style="font-size:13px">Crew: ' + escapeHtml(crew) + ' · 📍 ' + escapeHtml(loc) + '</p>' +
           '</div>' +
           '<span class="badge ' + statusClass + '">' + statusText + '</span>' +
-          '<div class="entity-actions">' +
-            '<button class="btn btn-ghost btn-sm" type="button" data-action="edit">Edit</button>' +
-            '<button class="btn btn-ghost btn-sm" type="button" data-action="delete">Delete</button>' +
+          '<div class="entity-actions row-actions">' +
+            '<button class="btn btn-primary btn-sm" type="button" data-action="edit">Edit</button>' +
+            '<button class="btn btn-primary btn-sm" type="button" data-action="delete">Delete</button>' +
           '</div>' +
         '</div>';
       }).join('');
@@ -552,15 +552,22 @@
       tbody.innerHTML = filtered.map(function (p) {
         var statusClass = p.available ? 'badge-soft-green' : 'badge-soft-red';
         var statusText = p.available ? 'Active' : 'Hidden';
+        var imgSrc = p.image
+          ? (/^(data:|https?:|\.\.\/)/.test(p.image) ? p.image : '../' + p.image)
+          : '';
+        var thumbStyle = imgSrc
+          ? 'background-image:url(\'' + escapeHtml(imgSrc) + '\'); background-size:cover; background-position:center;'
+          : 'background:linear-gradient(135deg, #ffd7d2, #ffe9b0); font-size:20px; display:flex; align-items:center; justify-content:center;';
+        var thumbContent = p.image ? '' : '🍕';
         return '<tr data-id="' + escapeHtml(p.id) + '">' +
-          '<td><div class="entity-thumb" style="width:40px;height:40px;font-size:20px">🍕</div></td>' +
+          '<td><div class="entity-thumb product-thumb" style="' + thumbStyle + '">' + thumbContent + '</div></td>' +
           '<td><strong>' + escapeHtml(p.name || '') + '</strong><br><span class="text-muted" style="font-size:12px">' + escapeHtml(p.description || '') + '</span></td>' +
           '<td><span class="badge badge-soft">' + escapeHtml(p.category || '') + '</span></td>' +
           '<td>' + escapeHtml(formatPrice(p.price)) + '</td>' +
           '<td><span class="badge ' + statusClass + '">' + statusText + '</span></td>' +
-          '<td>' +
-            '<button class="btn btn-ghost btn-sm" type="button" data-action="edit">Edit</button> ' +
-            '<button class="btn btn-ghost btn-sm" type="button" data-action="delete">Delete</button>' +
+          '<td class="row-actions">' +
+            '<button class="btn btn-primary btn-sm" type="button" data-action="edit">Edit</button>' +
+            '<button class="btn btn-primary btn-sm" type="button" data-action="delete">Delete</button>' +
           '</td>' +
         '</tr>';
       }).join('');
@@ -579,6 +586,22 @@
       return 'prod-' + String(max + 1).padStart(3, '0');
     }
 
+    function refreshImagePreview(src) {
+      var preview = qs('#product-image-preview');
+      if (!preview) return;
+      if (src) {
+        // Existing relative paths (assets/img/...) live one folder up from admin-dashboard/
+        var resolved = /^(data:|https?:|\.\.\/)/.test(src) ? src : '../' + src;
+        preview.style.backgroundImage = "url('" + resolved + "')";
+        preview.style.backgroundSize = 'cover';
+        preview.style.backgroundPosition = 'center';
+        preview.textContent = '';
+      } else {
+        preview.style.backgroundImage = '';
+        preview.textContent = '🍕';
+      }
+    }
+
     function openProductModal(mode, product) {
       var titleEl = qs('#product-modal-title');
       if (titleEl) titleEl.textContent = mode === 'add' ? 'Add Product' : 'Edit Product';
@@ -589,6 +612,7 @@
       var catField = qs('#product-category');
       var priceField = qs('#product-price');
       var imageField = qs('#product-image');
+      var imageFileField = qs('#product-image-file');
       var availField = qs('#product-available');
 
       if (idField) idField.value = product.id || '';
@@ -597,9 +621,29 @@
       if (catField) catField.value = product.category || 'Classic';
       if (priceField) priceField.value = (product.price != null) ? product.price : '';
       if (imageField) imageField.value = product.image || '';
+      if (imageFileField) imageFileField.value = '';
       if (availField) availField.checked = product.available !== false;
+      refreshImagePreview(product.image || '');
 
       openModal('product-modal');
+    }
+
+    // Wire file input -> data URL -> hidden field + preview (once)
+    var imageFileEl = qs('#product-image-file');
+    if (imageFileEl && !imageFileEl.dataset.wired) {
+      imageFileEl.dataset.wired = '1';
+      imageFileEl.addEventListener('change', function () {
+        var file = this.files && this.files[0];
+        if (!file) return;
+        var reader = new FileReader();
+        reader.onload = function (ev) {
+          var dataUrl = ev.target.result;
+          var hidden = qs('#product-image');
+          if (hidden) hidden.value = dataUrl;
+          refreshImagePreview(dataUrl);
+        };
+        reader.readAsDataURL(file);
+      });
     }
 
     var chipsEl = qs('#category-filter-chips');
